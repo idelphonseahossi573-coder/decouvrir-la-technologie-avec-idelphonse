@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vérification de Certificat Web3 — Idelphonse</title>
+<meta name="description" content="Vérifiez l'authenticité d'un certificat Web3 délivré par Idelphonse AHOSSI. Recherche par identifiant unique."/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>✅</text></svg>"/>
+<style>
+.verif-hero {
+  background: linear-gradient(135deg, #0a0e1a, #0d1f45);
+  padding: 110px 0 70px;
+  text-align: center;
+}
+.verif-box {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: 48px 40px;
+}
+.verif-input-row {
+  display: flex; gap: 12px; margin-bottom: 20px;
+}
+.verif-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius);
+  font-size: .95rem;
+  font-family: var(--font-mono);
+  background: var(--white);
+  color: var(--text);
+  transition: border-color var(--transition);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+[data-theme="dark"] .verif-input { background: var(--blue-800); border-color: var(--gray-300); }
+.verif-input:focus { outline: none; border-color: var(--blue-400); }
+.verif-input::placeholder { text-transform: none; letter-spacing: 0; font-family: var(--font-body); }
+
+/* Result states */
+.verif-result {
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-top: 24px;
+  display: none;
+  animation: fadeUp .4s ease;
+}
+.verif-result.valid {
+  background: rgba(16,185,129,.08);
+  border: 1.5px solid rgba(16,185,129,.25);
+}
+.verif-result.invalid {
+  background: rgba(239,68,68,.08);
+  border: 1.5px solid rgba(239,68,68,.25);
+}
+.verif-result.loading {
+  background: rgba(30,95,204,.06);
+  border: 1.5px solid rgba(30,95,204,.15);
+  display: flex; align-items: center; gap: 16px;
+}
+
+.verif-status-icon { font-size: 2.8rem; margin-bottom: 12px; }
+.verif-status-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+.verif-status-title.valid { color: #059669; }
+.verif-status-title.invalid { color: #dc2626; }
+
+.verif-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: .875rem;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.verif-detail-row:last-child { border-bottom: none; }
+.verif-detail-label { color: var(--text-light); }
+.verif-detail-value { font-weight: 600; }
+
+/* Spinner */
+.spinner {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 3px solid rgba(30,95,204,.2);
+  border-top-color: var(--blue-400);
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Mini cert preview */
+.mini-cert {
+  background: linear-gradient(135deg, #0a0e1a, #0d1f45);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.mini-cert::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(circle at 70% 30%, rgba(0,212,255,.06), transparent 60%);
+}
+.mini-cert-inner { position: relative; z-index: 1; }
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.qr-box {
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+}
+.qr-box h4 { font-size: .9rem; margin-bottom: 8px; }
+.qr-icon { font-size: 2.5rem; margin-bottom: 8px; }
+
+/* How it works steps */
+.how-step {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+.how-step:last-child { border-bottom: none; }
+.how-step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-500), var(--accent));
+  color: #fff; font-family: var(--font-display); font-weight: 700;
+  font-size: .9rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+@media(max-width:600px){
+  .verif-box { padding: 28px 20px; }
+  .verif-input-row { flex-direction: column; }
+  .qr-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg>
+      <span>Idelphonse<span style="color:var(--accent)">Web3</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="debutant.html">Débutant</a>
+      <a href="intermediaire.html">Intermédiaire</a>
+      <a href="glossaire.html">Glossaire</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="certification.html">Certification</a>
+      <a href="verification.html" class="active">Vérification</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-dark-toggle" id="dark-toggle">🌙</button>
+      <a href="dashboard.html" class="btn btn-primary btn-sm">📊 Dashboard</a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="debutant.html">🌱 Débutant</a>
+  <a href="intermediaire.html">📈 Intermédiaire</a>
+  <a href="avance.html">🚀 Avancé</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="certification.html">🏆 Certification</a>
+  <a href="verification.html">✅ Vérification</a>
+  <a href="coaching.html">🎯 Coaching</a>
+  <a href="contact.html">📩 Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="verif-hero">
+  <div class="container">
+    <div class="eyebrow" style="color:#4ade80;">✅ Authenticité garantie</div>
+    <h1 style="color:#fff;margin-top:12px;">Vérification de Certificat</h1>
+    <p style="color:rgba(255,255,255,.7);max-width:500px;margin:16px auto 0;">Vérifiez l'authenticité d'un certificat Web3 délivré par Idelphonse AHOSSI en entrant son identifiant unique.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- MAIN VERIF BOX -->
+    <div class="verif-box" data-reveal>
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">🔍</div>
+        <h2 style="font-size:1.4rem;margin-bottom:8px;">Vérifier un certificat</h2>
+        <p style="font-size:.875rem;">Entrez l'identifiant unique du certificat (format : IDW3-XXXXX-XXXX)</p>
+      </div>
+
+      <div class="verif-input-row">
+        <input type="text" id="certIdInput" class="verif-input"
+          placeholder="IDW3-ABC123-XY45"
+          maxlength="25"
+          oninput="this.value=this.value.toUpperCase()"
+          onkeydown="if(event.key==='Enter') verifyCert()"/>
+        <button class="btn btn-primary" onclick="verifyCert()" style="white-space:nowrap;">
+          🔍 Vérifier
+        </button>
+      </div>
+
+      <!-- RESULT AREA -->
+      <div id="verifResult" class="verif-result"></div>
+
+      <div style="margin-top:24px;padding:16px;background:rgba(255,255,255,.03);border:1px solid var(--gray-200);border-radius:var(--radius);text-align:center;">
+        <p style="font-size:.78rem;color:var(--text-light);margin:0;">
+          💡 L'identifiant unique se trouve en bas du certificat, sous la signature.
+          Format : <code style="background:var(--gray-200);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:.75rem;">IDW3-XXXXX-XXXX</code>
+        </p>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div style="max-width:640px;margin:64px auto 0;" data-reveal>
+      <div class="section-header text-center">
+        <div class="eyebrow">ℹ️ Comment fonctionne la vérification ?</div>
+        <h2 style="font-size:1.6rem;margin-top:8px;">Système de certification sécurisé</h2>
+      </div>
+      <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:32px;">
+        <div class="how-step">
+          <div class="how-step-num">1</div>
+          <div>
+            <h4 style="margin-bottom:4px;">Examen de certification</h4>
+            <p style="font-size:.875rem;">L'apprenant passe un examen de 20 questions couvrant tous les modules Web3. Un score minimum de 60% est requis.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">2</div>
+          <div>
+            <h4 style="margin-bottom:4px;">Génération de l'identifiant unique</h4>
+            <p style="font-size:.875rem;">À la réussite, un identifiant unique est généré (<code style="font-family:var(--font-mono);font-size:.8rem;">IDW3-XXXXX-XXXX</code>) et associé au certificat avec la date, le score et le nom du titulaire.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">3</div>
+          <div>
+            <h4 style="margin-bottom:4px;">Stockage local sécurisé</h4>
+            <p style="font-size:.875rem;">Les données du certificat sont sauvegardées dans le navigateur du titulaire. La vérification confirme que l'identifiant correspond bien à un certificat valide.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">4</div>
+          <div>
+            <h4 style="margin-bottom:4px;">Validation officielle par Idelphonse</h4>
+            <p style="font-size:.875rem;">Pour une validation encore plus officielle, le titulaire peut envoyer son certificat PDF à Idelphonse via WhatsApp ou email pour obtenir une confirmation manuelle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO BOXES -->
+    <div class="grid-2" style="gap:24px;max-width:800px;margin:48px auto 0;" data-reveal>
+      <div class="qr-box">
+        <div class="qr-icon">🏆</div>
+        <h4>Vous avez un certificat ?</h4>
+        <p style="font-size:.8rem;color:var(--text-light);margin:8px 0 16px;">Passez l'examen de certification et obtenez votre certificat officiel signé.</p>
+        <a href="certification.html" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">Passer l'examen</a>
+      </div>
+      <div class="qr-box">
+        <div class="qr-icon">📊</div>
+        <h4>Voir mes certifications</h4>
+        <p style="font-size:.8rem;color:var(--text-light);margin:8px 0 16px;">Retrouvez tous vos certificats obtenus dans votre tableau de bord personnel.</p>
+        <a href="dashboard.html" class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;">Aller au Dashboard</a>
+      </div>
+    </div>
+
+    <!-- CONTACT VALIDATION -->
+    <div style="max-width:640px;margin:48px auto 0;background:linear-gradient(135deg,#25d366,#128c7e);border-radius:var(--radius-xl);padding:36px;text-align:center;" data-reveal>
+      <div style="font-size:2rem;margin-bottom:12px;">💬</div>
+      <h3 style="color:#fff;margin-bottom:8px;">Validation officielle par WhatsApp</h3>
+      <p style="color:rgba(255,255,255,.85);font-size:.875rem;max-width:400px;margin:0 auto 20px;">Envoyez votre certificat PDF à Idelphonse pour une confirmation et un archivage officiel de votre réussite.</p>
+      <a href="https://wa.me/2290152217284?text=Bonjour Idelphonse ! Je souhaite faire valider mon certificat Web3." target="_blank"
+         class="btn btn-lg" style="background:#fff;color:#128c7e;font-weight:700;">
+        WhatsApp Idelphonse
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg>
+          <span style="color:#fff;">Idelphonse<span style="color:var(--accent)">Web3</span></span>
+        </a>
+        <p>Formation Web3 gratuite en français pour l'Afrique.</p>
+      </div>
+      <div class="footer-col"><h5>Parcours</h5><ul>
+        <li><a href="debutant.html">🌱 Débutant</a></li>
+        <li><a href="intermediaire.html">📈 Intermédiaire</a></li>
+        <li><a href="avance.html">🚀 Avancé</a></li>
+        <li><a href="ambassadeur.html">🌍 Ambassadeur</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Mon espace</h5><ul>
+        <li><a href="dashboard.html">📊 Dashboard</a></li>
+        <li><a href="certification.html">🏆 Certification</a></li>
+        <li><a href="verification.html">✅ Vérification</a></li>
+        <li><a href="glossaire.html">📖 Glossaire</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul>
+        <li><a href="mailto:idelphonseahossi573@gmail.com">✉️ Email</a></li>
+        <li><a href="https://wa.me/2290152217284" target="_blank">💬 WhatsApp</a></li>
+        <li><a href="https://t.me/idelphonse" target="_blank">✈ Telegram</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Découvrir la Technologie avec Idelphonse. Tous droits réservés.</p>
+      <p style="color:rgba(255,255,255,.25);">Fait avec ❤️ au Bénin 🇧🇯</p>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" title="Retour en haut">↑</button>
+<script src="script.js"></script>
+<script src="progress.js"></script>
+<script>
+/* ── VERIFICATION LOGIC ─────────────────────────────────── */
+
+// Auto-fill from URL param
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  if (id) {
+    document.getElementById('certIdInput').value = id.toUpperCase();
+    setTimeout(() => verifyCert(), 400);
+  }
+});
+
+function verifyCert() {
+  const rawId = document.getElementById('certIdInput').value.trim().toUpperCase();
+  const resultEl = document.getElementById('verifResult');
+
+  if (!rawId) {
+    resultEl.style.display = 'block';
+    resultEl.className = 'verif-result invalid';
+    resultEl.innerHTML = `
+      <div style="text-align:center;">
+        <div class="verif-status-icon">⚠️</div>
+        <div class="verif-status-title invalid">Identifiant manquant</div>
+        <p style="font-size:.875rem;color:var(--text-light);">Veuillez entrer un identifiant de certificat pour lancer la vérification.</p>
+      </div>`;
+    return;
+  }
+
+  // Validate format
+  const formatOk = /^IDW3-[A-Z0-9]+-[A-Z0-9]+$/.test(rawId);
+
+  // Show loading
+  resultEl.style.display = 'flex';
+  resultEl.className = 'verif-result loading';
+  resultEl.innerHTML = `
+    <div class="spinner"></div>
+    <div>
+      <div style="font-weight:600;">Vérification en cours…</div>
+      <div style="font-size:.8rem;color:var(--text-light);">Recherche de l'identifiant <code style="font-family:var(--font-mono);">${rawId}</code></div>
+    </div>`;
+
+  // Simulate async check (localStorage is sync but UX feels better with delay)
+  setTimeout(() => {
+    if (!formatOk) {
+      showInvalid(resultEl, rawId, 'Format d\'identifiant incorrect. Le format attendu est : IDW3-XXXXX-XXXX');
+      return;
+    }
+
+    const cert = IDW3.verifyCertification(rawId);
+
+    if (cert) {
+      showValid(resultEl, cert);
+    } else {
+      showInvalid(resultEl, rawId, 'Aucun certificat trouvé avec cet identifiant sur cet appareil. Si vous avez passé l\'examen sur un autre appareil ou navigateur, la vérification doit être effectuée sur le même appareil.');
+    }
+  }, 900);
+}
+
+function showValid(el, cert) {
+  const date    = new Date(cert.date).toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
+  const grade   = cert.grade || '—';
+  const scoreColor = cert.score >= 80 ? '#059669' : cert.score >= 60 ? '#f0c040' : '#dc2626';
+
+  el.style.display = 'block';
+  el.className = 'verif-result valid';
+  el.innerHTML = `
+    <div style="text-align:center;margin-bottom:24px;">
+      <div class="verif-status-icon">✅</div>
+      <div class="verif-status-title valid">Certificat Authentique</div>
+      <p style="font-size:.875rem;color:#059669;margin-top:4px;">Ce certificat a été délivré par Découvrir la Technologie avec Idelphonse</p>
+    </div>
+
+    <div style="background:rgba(16,185,129,.06);border-radius:var(--radius);padding:20px;">
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">👤 Titulaire</span>
+        <span class="verif-detail-value">${escHtml(cert.name)}</span>
+      </div>
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">📋 Certification</span>
+        <span class="verif-detail-value">Certification Web3 — Blockchain & Crypto</span>
+      </div>
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">🎯 Score obtenu</span>
+        <span class="verif-detail-value" style="color:${scoreColor};">${cert.score}% — ${grade}</span>
+      </div>
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">📅 Date de délivrance</span>
+        <span class="verif-detail-value">${date}</span>
+      </div>
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">🔑 Identifiant unique</span>
+        <span class="verif-detail-value" style="font-family:var(--font-mono);font-size:.8rem;">${escHtml(cert.id)}</span>
+      </div>
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">✍️ Délivré par</span>
+        <span class="verif-detail-value">Idelphonse AHOSSI · Fondateur & Éducateur Web3 · 🇧🇯 Bénin</span>
+      </div>
+      <div class="verif-detail-row" style="border-bottom:none;">
+        <span class="verif-detail-label">📊 Statut</span>
+        <span style="background:rgba(16,185,129,.15);color:#059669;padding:3px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">✅ VALIDE</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+      <a href="certification.html?id=${encodeURIComponent(cert.id)}" class="btn btn-primary btn-sm">🏆 Voir le certificat</a>
+      <a href="https://wa.me/2290152217284?text=Bonjour Idelphonse, je souhaite valider le certificat ${encodeURIComponent(cert.id)} de ${encodeURIComponent(cert.name)}" target="_blank" class="btn btn-accent btn-sm">💬 Valider via WhatsApp</a>
+    </div>`;
+}
+
+function showInvalid(el, rawId, reason) {
+  el.style.display = 'block';
+  el.className = 'verif-result invalid';
+  el.innerHTML = `
+    <div style="text-align:center;margin-bottom:20px;">
+      <div class="verif-status-icon">❌</div>
+      <div class="verif-status-title invalid">Certificat non trouvé</div>
+    </div>
+    <div style="background:rgba(239,68,68,.06);border-radius:var(--radius);padding:20px;">
+      <div class="verif-detail-row">
+        <span class="verif-detail-label">🔑 Identifiant recherché</span>
+        <span style="font-family:var(--font-mono);font-size:.8rem;color:#dc2626;">${escHtml(rawId)}</span>
+      </div>
+      <div class="verif-detail-row" style="border-bottom:none;">
+        <span class="verif-detail-label">📋 Statut</span>
+        <span style="background:rgba(239,68,68,.15);color:#dc2626;padding:3px 12px;border-radius:50px;font-size:.78rem;font-weight:700;">❌ NON TROUVÉ</span>
+      </div>
+    </div>
+    <p style="font-size:.8rem;color:var(--text-light);margin-top:16px;">${reason}</p>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('certIdInput').value='';document.getElementById('certIdInput').focus();document.getElementById('verifResult').style.display='none'">↩ Réessayer</button>
+      <a href="https://wa.me/2290152217284?text=Bonjour, je cherche à vérifier le certificat ${encodeURIComponent(rawId)}" target="_blank" class="btn btn-accent btn-sm">💬 Contacter Idelphonse</a>
+    </div>`;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Enter key on input
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('certIdInput');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') verifyCert(); });
+});
+</script>
+</body>
+</html>

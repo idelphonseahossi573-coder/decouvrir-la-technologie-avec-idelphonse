@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Parcours Débutant | Web3 & Blockchain — Idelphonse</title>
+<meta name="description" content="Apprenez le Web3 et la Blockchain depuis zéro : Internet, Bitcoin, wallets, sécurité. Formation gratuite en français adaptée aux débutants africains."/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🌱</text></svg>"/>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg>
+      <span>Idelphonse<span style="color:var(--accent)">Web3</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="debutant.html" class="active">Débutant</a>
+      <a href="intermediaire.html">Intermédiaire</a>
+      <a href="avance.html">Avancé</a>
+      <a href="ambassadeur.html">Ambassadeur</a>
+      <a href="glossaire.html">Glossaire</a>
+      <a href="coaching.html">Coaching</a>
+      <a href="contact.html">Contact</a>
+          <a href="dashboard.html">📊 Dashboard</a>
+      <a href="certification.html">🏆 Certif</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-dark-toggle" id="dark-toggle">🌙</button>
+      <a href="coaching.html" class="btn btn-primary btn-sm">Coaching gratuit</a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="debutant.html">🌱 Parcours Débutant</a>
+  <a href="intermediaire.html">📈 Parcours Intermédiaire</a>
+  <a href="avance.html">🚀 Parcours Avancé</a>
+  <a href="ambassadeur.html">🌍 Devenir Ambassadeur</a>
+  <a href="glossaire.html">📖 Glossaire Web3</a>
+  <a href="coaching.html">🎯 Coaching Personnel</a>
+  <a href="contact.html">📩 Contact</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="certification.html">🏆 Certification</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb" style="justify-content:center;">
+      <a href="index.html">Accueil</a><span>›</span><span>Parcours Débutant</span>
+    </div>
+    <div class="eyebrow">🌱 Niveau 1 — Débutant</div>
+    <h1>Zéro connaissance ? Parfait, commencez ici.</h1>
+    <p>Du fonctionnement d'Internet jusqu'à la création de votre premier wallet crypto, ce parcours vous guide pas à pas, sans jargon inutile.</p>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
+      <span style="background:rgba(16,185,129,.15);color:#4ade80;padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;">✅ 15 modules</span>
+      <span style="background:rgba(0,212,255,.1);color:var(--accent);padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;">⏱ ~8 heures</span>
+      <span style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;">🆓 100% Gratuit</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div style="background:var(--blue-800);padding:20px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+  <div class="container">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Votre progression dans le parcours débutant</span><span>0 / 15 modules</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Progress resume banner -->
+<div id="resumeHere" style="background:linear-gradient(135deg,rgba(30,95,204,.15),rgba(0,212,255,.08));border-bottom:1px solid rgba(30,95,204,.2);padding:12px 0;display:none;">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="font-size:.85rem;color:var(--text-light);">
+      📊 <span id="resumePct">0%</span> du parcours Débutant complété
+    </div>
+    <a href="dashboard.html" class="btn btn-ghost btn-sm">Voir mon dashboard →</a>
+  </div>
+</div>
+<script>
+(function(){
+  if(typeof IDW3==='undefined') return;
+  var pct = IDW3.getSectionPercent('debutant');
+  if(pct===0) return;
+  document.getElementById('resumePct').textContent = pct + '%';
+  document.getElementById('resumeHere').style.display = '';
+})();
+</script>
+
+<!-- MODULE 1 : INTERNET -->
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="eyebrow" style="color:#059669;">Module 1</div>
+      <h2>🌐 Qu'est-ce qu'Internet ?</h2>
+      <p>Avant de comprendre Web3, vous devez maîtriser les bases. Qu'est-ce qu'Internet vraiment ?</p>
+    </div>
+
+    <div class="grid-2" style="gap:40px;" data-reveal>
+      <div>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-trigger">📡 Définition simple d'Internet <span class="accordion-chevron">▼</span></button>
+            <div class="accordion-body">
+              <p>Internet est un <strong>réseau mondial d'ordinateurs interconnectés</strong> qui communiquent entre eux via des protocoles standardisés (TCP/IP). Imaginez Internet comme un immense réseau routier : les ordinateurs sont des villes, et les câbles (ou ondes) sont les routes qui les relient.</p>
+              <div class="info-box" style="margin-top:16px;">
+                <span class="info-box-icon">💡</span>
+                <p><strong>Exemple africain :</strong> Quand vous envoyez un message WhatsApp depuis Cotonou à quelqu'un à Lagos, votre message passe par plusieurs serveurs (comme des relais) avant d'arriver. C'est Internet en action.</p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger">🏗️ Comment fonctionne-t-il ? <span class="accordion-chevron">▼</span></button>
+            <div class="accordion-body">
+              <p>Internet fonctionne grâce à :</p>
+              <ul>
+                <li><strong>Les serveurs</strong> : ordinateurs puissants qui stockent des données</li>
+                <li><strong>Les clients</strong> : votre téléphone ou PC qui demande des données</li>
+                <li><strong>Les protocoles</strong> : les "règles de communication" (HTTP, TCP/IP)</li>
+                <li><strong>Les FAI</strong> : fournisseurs d'accès Internet (MTN, Moov, etc.)</li>
+                <li><strong>Les câbles sous-marins</strong> : qui relient les continents</li>
+              </ul>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger">🔍 IP, DNS et HTTP expliqués <span class="accordion-chevron">▼</span></button>
+            <div class="accordion-body">
+              <p><strong>Adresse IP :</strong> Chaque appareil connecté a une adresse unique (ex: 192.168.1.1). C'est comme votre numéro de téléphone sur Internet.</p>
+              <p style="margin-top:8px;"><strong>DNS :</strong> Traduit "google.com" en adresse IP. C'est l'annuaire téléphonique d'Internet.</p>
+              <p style="margin-top:8px;"><strong>HTTP/HTTPS :</strong> Le protocole utilisé pour transférer des pages web. Le "S" de HTTPS signifie que la communication est chiffrée (sécurisée).</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger">🌍 Internet en Afrique <span class="accordion-chevron">▼</span></button>
+            <div class="accordion-body">
+              <p>L'Afrique connaît une croissance explosive d'Internet. Plus de 600 millions d'utilisateurs en 2024. L'expansion de la fibre optique et la 4G/5G transforment le continent. C'est dans ce contexte que le Web3 représente une <strong>opportunité historique</strong> pour l'Afrique de participer à la prochaine révolution numérique dès le début.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- SVG Internet diagram -->
+        <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;text-align:center;">
+          <svg viewBox="0 0 320 260" width="100%" style="max-width:320px;margin:0 auto;">
+            <!-- Central cloud (Internet) -->
+            <ellipse cx="160" cy="130" rx="55" ry="35" fill="#1e5fcc" opacity=".15" stroke="#1e5fcc" stroke-width="1.5"/>
+            <text x="160" y="125" text-anchor="middle" fill="#2d7ef0" font-size="11" font-weight="bold">INTERNET</text>
+            <text x="160" y="140" text-anchor="middle" fill="#5ba3ff" font-size="9">réseau mondial</text>
+            <!-- Devices -->
+            <rect x="20" y="30" width="50" height="35" rx="4" fill="#0f1f3d" stroke="#2d7ef0" stroke-width="1.5"/>
+            <text x="45" y="52" text-anchor="middle" fill="#a8d0ff" font-size="9">Téléphone</text>
+            <line x1="70" y1="47" x2="108" y2="115" stroke="#1e5fcc" stroke-width="1" stroke-dasharray="4,3"/>
+            <rect x="250" y="30" width="50" height="35" rx="4" fill="#0f1f3d" stroke="#2d7ef0" stroke-width="1.5"/>
+            <text x="275" y="52" text-anchor="middle" fill="#a8d0ff" font-size="9">Ordinateur</text>
+            <line x1="250" y1="47" x2="212" y2="115" stroke="#1e5fcc" stroke-width="1" stroke-dasharray="4,3"/>
+            <rect x="20" y="195" width="50" height="35" rx="4" fill="#0f1f3d" stroke="#00d4ff" stroke-width="1.5"/>
+            <text x="45" y="217" text-anchor="middle" fill="#a8d0ff" font-size="9">Serveur</text>
+            <line x1="70" y1="213" x2="108" y2="148" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4,3"/>
+            <rect x="250" y="195" width="50" height="35" rx="4" fill="#0f1f3d" stroke="#00d4ff" stroke-width="1.5"/>
+            <text x="275" y="217" text-anchor="middle" fill="#a8d0ff" font-size="9">Site Web</text>
+            <line x1="250" y1="213" x2="212" y2="148" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4,3"/>
+            <!-- Protocol label -->
+            <text x="160" y="255" text-anchor="middle" fill="#6b7280" font-size="9">TCP/IP — le langage universel d'Internet</text>
+          </svg>
+          <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;">Internet = réseau de réseaux interconnectés</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 2 -->
+    <div style="margin-top:72px;" data-reveal>
+      <div class="section-header">
+        <div class="eyebrow" style="color:#059669;">Module 2</div>
+        <h2>🕸️ Qu'est-ce que le Web ? Web1, Web2, Web3</h2>
+        <p>Internet est l'infrastructure. Le Web est un service qui fonctionne sur Internet. Voyons son évolution.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="course-card">
+          <div class="card-icon" style="background:rgba(107,114,128,.12);font-size:1.4rem;">📰</div>
+          <div class="eyebrow" style="color:var(--gray-500);">1991 – 2004</div>
+          <h3>Web 1.0 — Lecture seule</h3>
+          <p>Pages statiques, contenu créé uniquement par des développeurs. Les utilisateurs lisent, c'est tout. Comme un journal en ligne.</p>
+          <div class="highlight-box">
+            <p>🏷️ <strong>Exemples :</strong> Premiers sites d'info, pages personnelles HTML</p>
+          </div>
+        </div>
+        <div class="course-card" style="border-color:var(--blue-400);">
+          <div class="card-icon icon-blue" style="font-size:1.4rem;">👥</div>
+          <div class="eyebrow">2004 – Aujourd'hui</div>
+          <h3>Web 2.0 — Lecture + Écriture</h3>
+          <p>Les utilisateurs créent du contenu. Réseaux sociaux, apps, e-commerce. Mais les données appartiennent aux plateformes (Facebook, Google).</p>
+          <div class="highlight-box">
+            <p>🏷️ <strong>Exemples :</strong> Facebook, YouTube, WhatsApp, Instagram</p>
+          </div>
+        </div>
+        <div class="course-card" style="border-color:var(--accent);">
+          <div class="card-icon icon-cyan" style="font-size:1.4rem;">🔗</div>
+          <div class="eyebrow" style="color:var(--accent);">Maintenant — Avenir</div>
+          <h3>Web 3.0 — Propriété réelle</h3>
+          <p>Vous possédez vos données, vos actifs numériques. Pas de contrôle central. Décentralisé, sécurisé par la blockchain.</p>
+          <div class="highlight-box" style="border-left-color:var(--accent);">
+            <p>🏷️ <strong>Exemples :</strong> DeFi, NFT, DAOs, wallets crypto</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top:32px;">
+        <span class="info-box-icon">💡</span>
+        <p><strong>Analogie simple :</strong> Web1 = vous regardez la télévision. Web2 = vous publiez sur YouTube mais YouTube garde vos revenus et peut supprimer votre compte. Web3 = vous possédez votre chaîne, vos abonnés, vos revenus — personne ne peut vous les enlever.</p>
+      </div>
+    </div>
+
+    <!-- MODULE 3 : BLOCKCHAIN -->
+    <div style="margin-top:72px;" data-reveal>
+      <div class="section-header">
+        <div class="eyebrow" style="color:#059669;">Module 3</div>
+        <h2>⛓️ Introduction à la Blockchain</h2>
+        <p>La technologie qui rend Web3 possible. Comprendre la blockchain, c'est comprendre la révolution en cours.</p>
+      </div>
+
+      <div class="grid-2" style="gap:40px;">
+        <div>
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-trigger">🧱 Qu'est-ce qu'une blockchain ? <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <p>Une blockchain est un <strong>registre numérique partagé et immuable</strong>. Imaginez un grand cahier que tout le monde peut lire, où chacun peut écrire, mais où personne ne peut effacer ou modifier ce qui est écrit.</p>
+                <p style="margin-top:8px;">Chaque "bloc" contient des transactions. Ces blocs sont liés en "chaîne" grâce à la cryptographie.</p>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">🌍 Pourquoi la blockchain existe ? <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <p>La blockchain résout un problème fondamental : <strong>comment faire confiance sans intermédiaire ?</strong></p>
+                <ul>
+                  <li>Envoyer de l'argent sans banque</li>
+                  <li>Signer des contrats sans notaire</li>
+                  <li>Voter sans bureau de vote centralisé</li>
+                  <li>Prouver la propriété sans registre officiel</li>
+                </ul>
+                <div class="info-box" style="margin-top:12px;">
+                  <span class="info-box-icon">🌍</span>
+                  <p>En Afrique, 60% de la population n'a pas de compte bancaire. La blockchain peut inclure financièrement ces personnes dès maintenant.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">🔐 Comment est-elle sécurisée ? <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <p>La sécurité blockchain repose sur :</p>
+                <ul>
+                  <li><strong>La décentralisation</strong> : Milliers de copies identiques sur des serveurs du monde entier</li>
+                  <li><strong>La cryptographie</strong> : Chaque bloc a une "empreinte digitale" unique (hash)</li>
+                  <li><strong>Le consensus</strong> : La majorité du réseau doit valider chaque transaction</li>
+                  <li><strong>L'immuabilité</strong> : Une fois écrit, un bloc ne peut plus être modifié</li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-trigger">⛏️ Qu'est-ce que le minage ? <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <p>Le minage (Proof of Work) est le processus par lequel des ordinateurs puissants (<strong>mineurs</strong>) résolvent des calculs complexes pour valider les transactions et ajouter de nouveaux blocs à la blockchain. En récompense, ils reçoivent des cryptomonnaies (Bitcoin par exemple).</p>
+                <p style="margin-top:8px;">Ethereum a migré vers le <strong>Proof of Stake</strong> (validation par dépôt de cryptos, plus économique en énergie).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <svg viewBox="0 0 320 280" width="100%" style="max-width:320px;margin:0 auto;">
+            <!-- Block 1 -->
+            <rect x="10" y="60" width="90" height="80" rx="8" fill="#0f1f3d" stroke="#1e5fcc" stroke-width="1.5"/>
+            <text x="55" y="80" text-anchor="middle" fill="#5ba3ff" font-size="8" font-weight="bold">BLOC #1</text>
+            <text x="55" y="95" text-anchor="middle" fill="#6b7280" font-size="7">Hash: 0x4a2f...</text>
+            <text x="55" y="107" text-anchor="middle" fill="#6b7280" font-size="7">Tx: Alice→Bob</text>
+            <text x="55" y="119" text-anchor="middle" fill="#6b7280" font-size="7">1 BTC</text>
+            <text x="55" y="131" text-anchor="middle" fill="#00d4ff" font-size="7">✓ Validé</text>
+            <!-- Arrow 1 -->
+            <path d="M100 100 L115 100" stroke="#1e5fcc" stroke-width="2" marker-end="url(#arrow)"/>
+            <!-- Block 2 -->
+            <rect x="115" y="60" width="90" height="80" rx="8" fill="#0f1f3d" stroke="#1e5fcc" stroke-width="1.5"/>
+            <text x="160" y="80" text-anchor="middle" fill="#5ba3ff" font-size="8" font-weight="bold">BLOC #2</text>
+            <text x="160" y="95" text-anchor="middle" fill="#6b7280" font-size="7">Hash: 0x8d1e...</text>
+            <text x="160" y="107" text-anchor="middle" fill="#6b7280" font-size="7">Prev: 0x4a2f</text>
+            <text x="160" y="119" text-anchor="middle" fill="#6b7280" font-size="7">Tx: Carol→Dave</text>
+            <text x="160" y="131" text-anchor="middle" fill="#00d4ff" font-size="7">✓ Validé</text>
+            <!-- Arrow 2 -->
+            <path d="M205 100 L220 100" stroke="#1e5fcc" stroke-width="2"/>
+            <!-- Block 3 -->
+            <rect x="220" y="60" width="90" height="80" rx="8" fill="#0f1f3d" stroke="#00d4ff" stroke-width="1.5"/>
+            <text x="265" y="80" text-anchor="middle" fill="#5ba3ff" font-size="8" font-weight="bold">BLOC #3</text>
+            <text x="265" y="95" text-anchor="middle" fill="#6b7280" font-size="7">Hash: 0x2c9a...</text>
+            <text x="265" y="107" text-anchor="middle" fill="#6b7280" font-size="7">Prev: 0x8d1e</text>
+            <text x="265" y="119" text-anchor="middle" fill="#6b7280" font-size="7">Tx: Eve→Frank</text>
+            <text x="265" y="131" text-anchor="middle" fill="#00d4ff" font-size="7">⏳ En cours</text>
+            <!-- Nodes at bottom -->
+            <circle cx="80" cy="220" r="18" fill="#0f1f3d" stroke="#1e5fcc" stroke-width="1.5"/>
+            <text x="80" y="224" text-anchor="middle" fill="#a8d0ff" font-size="9">Nœud</text>
+            <circle cx="160" cy="220" r="18" fill="#0f1f3d" stroke="#1e5fcc" stroke-width="1.5"/>
+            <text x="160" y="224" text-anchor="middle" fill="#a8d0ff" font-size="9">Nœud</text>
+            <circle cx="240" cy="220" r="18" fill="#0f1f3d" stroke="#1e5fcc" stroke-width="1.5"/>
+            <text x="240" y="224" text-anchor="middle" fill="#a8d0ff" font-size="9">Nœud</text>
+            <line x1="80" y1="202" x2="80" y2="140" stroke="#1e5fcc" stroke-width="1" stroke-dasharray="3,3"/>
+            <line x1="160" y1="202" x2="160" y2="140" stroke="#1e5fcc" stroke-width="1" stroke-dasharray="3,3"/>
+            <line x1="240" y1="202" x2="240" y2="140" stroke="#1e5fcc" stroke-width="1" stroke-dasharray="3,3"/>
+            <line x1="98" y1="220" x2="142" y2="220" stroke="#1e5fcc" stroke-width="1"/>
+            <line x1="178" y1="220" x2="222" y2="220" stroke="#1e5fcc" stroke-width="1"/>
+            <text x="160" y="260" text-anchor="middle" fill="#6b7280" font-size="9">Réseau décentralisé — tous ont la même copie</text>
+            <defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#1e5fcc"/></marker></defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 4 : BITCOIN & ETHEREUM -->
+    <div style="margin-top:72px;" data-reveal>
+      <div class="section-header">
+        <div class="eyebrow" style="color:#059669;">Modules 4 & 5</div>
+        <h2>₿ Bitcoin & ⟠ Ethereum</h2>
+      </div>
+      <div class="grid-2" style="gap:28px;">
+        <div class="course-card" style="border-color:#f7931a;">
+          <div class="card-icon" style="background:rgba(247,147,26,.12);font-size:1.8rem;">₿</div>
+          <h3 style="color:#f7931a;">Bitcoin (BTC)</h3>
+          <p>Créé en 2009 par le mystérieux <strong>Satoshi Nakamoto</strong>. Première cryptomonnaie décentralisée de l'histoire.</p>
+          <div class="accordion" style="margin-top:16px;">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Pourquoi Bitcoin est révolutionnaire ? <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <ul>
+                  <li>Première monnaie sans banque centrale ni gouvernement</li>
+                  <li>Offre limitée à <strong>21 millions</strong> de BTC (anti-inflation)</li>
+                  <li>Transaction en quelques minutes, à n'importe qui dans le monde</li>
+                  <li>Vous êtes votre propre banque</li>
+                </ul>
+                <div class="info-box" style="margin-top:12px;">
+                  <span class="info-box-icon">🌍</span>
+                  <p>Un mineur en RDC peut envoyer de l'argent à sa famille à Kinshasa sans payer 15% de frais à Western Union.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="course-card" style="border-color:#627eea;">
+          <div class="card-icon" style="background:rgba(98,126,234,.12);font-size:1.8rem;">⟠</div>
+          <h3 style="color:#627eea;">Ethereum (ETH)</h3>
+          <p>Créé par <strong>Vitalik Buterin</strong> en 2015. Va plus loin que Bitcoin en permettant les smart contracts et les DApps.</p>
+          <div class="accordion" style="margin-top:16px;">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Bitcoin vs Ethereum : les différences <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <p><strong>Bitcoin :</strong> Principalement une réserve de valeur et moyen de paiement.</p>
+                <p style="margin-top:8px;"><strong>Ethereum :</strong> Plateforme programmable. Permet de créer des applications décentralisées, des NFT, des protocoles DeFi.</p>
+                <p style="margin-top:8px;">Analogie : BTC est de l'or numérique. ETH est le pétrole qui fait tourner les applications Web3.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE WALLETS -->
+    <div style="margin-top:72px;" data-reveal>
+      <div class="section-header">
+        <div class="eyebrow" style="color:#059669;">Modules 6, 7 & 8</div>
+        <h2>👛 Wallets, Seed Phrase & Sécurité</h2>
+        <p>Le plus important à maîtriser avant de toucher à quoi que ce soit en crypto.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="course-card">
+          <div class="card-icon icon-cyan">👛</div>
+          <h3>Qu'est-ce qu'un Wallet ?</h3>
+          <p>Un wallet (portefeuille) n'est pas un lieu où vous stockez des cryptos. C'est une <strong>clé d'accès à la blockchain</strong>.</p>
+          <div class="accordion" style="margin-top:16px;">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Types de wallets <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <ul>
+                  <li><strong>Custodial</strong> : exchange garde vos clés (Binance, Bybit) — pratique, moins sécurisé</li>
+                  <li><strong>Non-custodial</strong> : vous gardez vos clés (MetaMask, Trust Wallet) — recommandé</li>
+                  <li><strong>Hardware</strong> : clé physique USB (Ledger) — maximum de sécurité</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" style="border-color:var(--gold);">
+          <div class="card-icon icon-gold">🌱</div>
+          <h3>La Seed Phrase</h3>
+          <p>12 ou 24 mots aléatoires générés lors de la création de votre wallet. C'est <strong>LA clé maîtresse</strong> de tout votre patrimoine crypto.</p>
+          <div class="highlight-box" style="border-left-color:var(--gold);">
+            <p>⚠️ <strong>Règle absolue :</strong> Ne partagez jamais votre seed phrase avec qui que ce soit. Pas même à Idelphonse, pas même à votre banque.</p>
+          </div>
+          <div class="accordion" style="margin-top:12px;">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Comment la sauvegarder ? <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <ul>
+                  <li>Notez-la sur papier physique (pas numérique)</li>
+                  <li>Conservez 2-3 copies dans des endroits séparés</li>
+                  <li>Jamais en photo, jamais par email ou WhatsApp</li>
+                  <li>Certains grèvent leurs mots sur une plaque métallique</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" style="border-color:#ef4444;">
+          <div class="card-icon" style="background:rgba(239,68,68,.12);font-size:1.4rem;">🚨</div>
+          <h3>Arnaques courantes</h3>
+          <p>Le Web3 attire aussi des escrocs. Reconnaître les arnaques avant d'en être victime.</p>
+          <div class="accordion" style="margin-top:16px;">
+            <div class="accordion-item">
+              <button class="accordion-trigger">Les arnaques à connaître <span class="accordion-chevron">▼</span></button>
+              <div class="accordion-body">
+                <ul>
+                  <li><strong>Phishing :</strong> Faux sites imitant MetaMask, Binance — vérifiez toujours l'URL</li>
+                  <li><strong>Rug Pull :</strong> Projet qui disparaît avec votre argent</li>
+                  <li><strong>Faux support :</strong> "Donnez-moi votre seed phrase" — JAMAIS</li>
+                  <li><strong>Airdrop frauduleux :</strong> "Approuvez ce contrat pour recevoir des tokens" — piège</li>
+                  <li><strong>Pump & Dump :</strong> Manipulation des prix par des groupes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE PRATIQUE -->
+    <div style="margin-top:72px;" data-reveal>
+      <div class="section-header">
+        <div class="eyebrow" style="color:#059669;">Module Pratique</div>
+        <h2>🛠️ Créer votre premier wallet — Guide pas à pas</h2>
+      </div>
+      <div class="grid-2" style="gap:40px;">
+        <div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <div>
+                <h4>Télécharger MetaMask</h4>
+                <p style="font-size:.875rem;">Allez sur metamask.io (vérifiez l'URL !). Installez l'extension Chrome ou l'app mobile. C'est le wallet le plus utilisé pour Ethereum.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <div>
+                <h4>Créer un nouveau wallet</h4>
+                <p style="font-size:.875rem;">Cliquez "Créer un nouveau wallet". Choisissez un mot de passe fort pour l'application (différent de la seed phrase).</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <div>
+                <h4>Sauvegarder la Seed Phrase</h4>
+                <p style="font-size:.875rem;">MetaMask vous montre 12 mots. Notez-les sur papier dans l'ordre exact. Vérifiez deux fois. Rangez en lieu sûr.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <div>
+                <h4>Votre adresse publique</h4>
+                <p style="font-size:.875rem;">Vous avez maintenant une adresse (ex: 0x742d...). C'est votre IBAN crypto. Partagez-la pour recevoir des cryptos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="info-box">
+            <span class="info-box-icon">💡</span>
+            <p><strong>Trust Wallet</strong> est une excellente alternative pour mobile, surtout sur Android. Disponible directement sur Google Play et App Store.</p>
+          </div>
+          <div class="highlight-box" style="margin-top:16px;">
+            <p>🎯 <strong>Exercice pratique :</strong> Créez votre wallet MetaMask ou Trust Wallet aujourd'hui. Notez votre seed phrase. Envoyez votre adresse à un ami pour qu'il vous envoie une toute petite quantité de crypto en test.</p>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--blue-700),var(--blue-600));border-radius:var(--radius-lg);padding:24px;margin-top:16px;">
+            <h4 style="color:#fff;margin-bottom:8px;">💬 Besoin d'aide ?</h4>
+            <p style="color:rgba(255,255,255,.7);font-size:.875rem;margin-bottom:16px;">Idelphonse peut vous guider pas à pas dans la création et sécurisation de votre wallet via WhatsApp.</p>
+            <a href="https://wa.me/2290152217284" target="_blank" class="btn btn-accent">WhatsApp Idelphonse</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div style="margin-top:72px;" data-reveal>
+      <div id="quiz-debutant"></div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:60px;padding-top:40px;border-top:1px solid var(--gray-200);" data-reveal>
+      <div></div>
+      <a href="intermediaire.html" class="btn btn-primary btn-lg">Parcours Intermédiaire →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg><span style="color:#fff;">Idelphonse<span style="color:var(--accent)">Web3</span></span></a>
+        <p>Formation Web3 & Blockchain gratuite en français, pensée pour l'Afrique.</p>
+      </div>
+      <div class="footer-col"><h5>Parcours</h5><ul><li><a href="debutant.html">🌱 Débutant</a></li><li><a href="intermediaire.html">📈 Intermédiaire</a></li><li><a href="avance.html">🚀 Avancé</a></li><li><a href="ambassadeur.html">🌍 Ambassadeur</a></li></ul></div>
+      <div class="footer-col"><h5>Ressources</h5><ul><li><a href="glossaire.html">📖 Glossaire</a></li><li><a href="coaching.html">🎯 Coaching</a></li><li><a href="contact.html">📩 Contact</a></li></ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul><li><a href="mailto:idelphonseahossi573@gmail.com">✉️ Email</a></li><li><a href="https://wa.me/2290152217284" target="_blank">💬 WhatsApp</a></li><li><a href="https://t.me/idelphonse" target="_blank">✈ Telegram</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Découvrir la Technologie avec Idelphonse.</p><p style="color:rgba(255,255,255,.25);">Fait avec ❤️ au Bénin 🇧🇯</p></div>
+  </div>
+</footer>
+
+<button id="back-to-top" title="Retour en haut">↑</button>
+<script src="script.js"></script>
+<script src="progress.js"></script>
+<script>
+initQuiz('quiz-debutant', [
+  {
+    q: "Quelle est la principale différence entre Web2 et Web3 ?",
+    options: [
+      "Web3 est plus rapide que Web2",
+      "Web2 est décentralisé, Web3 est centralisé",
+      "En Web3, vous possédez réellement vos données et actifs numériques",
+      "Web3 nécessite un abonnement payant"
+    ],
+    answer: 2,
+    explanation: "La propriété réelle de vos données et actifs est la révolution fondamentale de Web3. Sur Web2, tout appartient aux plateformes (Facebook, Google)."
+  },
+  {
+    q: "Que signifie 'décentralisé' dans le contexte de la blockchain ?",
+    options: [
+      "Le réseau est géré depuis plusieurs pays africains",
+      "Aucun acteur unique ne contrôle le réseau — des milliers de nœuds le maintiennent",
+      "Les transactions sont décentralisées vers plusieurs banques",
+      "Le site web a plusieurs serveurs de secours"
+    ],
+    answer: 1,
+    explanation: "La décentralisation signifie qu'aucune entreprise, gouvernement ou personne ne contrôle le réseau. Des milliers de nœuds indépendants maintiennent une copie identique de la blockchain."
+  },
+  {
+    q: "Votre Seed Phrase vous est demandée par le 'support MetaMask' sur Telegram. Que faites-vous ?",
+    options: [
+      "Je la partage car c'est le support officiel",
+      "Je prends une capture d'écran et l'envoie",
+      "Je ne la partage jamais et signale ce compte : c'est une arnaque",
+      "Je partage la moitié seulement pour être prudent"
+    ],
+    answer: 2,
+    explanation: "MetaMask n'a PAS de support Telegram. Aucune application légitime ne vous demandera jamais votre seed phrase. C'est toujours une arnaque. Ne partagez jamais vos 12/24 mots."
+  },
+  {
+    q: "Quelle est la limite d'émission de Bitcoin ?",
+    options: [
+      "1 milliard de BTC",
+      "100 millions de BTC",
+      "21 millions de BTC",
+      "Illimité, comme les euros"
+    ],
+    answer: 2,
+    explanation: "Bitcoin est limité à 21 millions d'unités, programmés dans son code source. C'est ce qui lui confère sa rareté et le protège de l'inflation — contrairement aux monnaies traditionnelles."
+  },
+  {
+    q: "Quelle est la différence entre votre adresse publique et votre clé privée (ou seed phrase) ?",
+    options: [
+      "Elles sont identiques",
+      "L'adresse publique peut être partagée pour recevoir des cryptos; la clé privée ne doit JAMAIS être partagée",
+      "La clé privée est le code PIN de votre banque",
+      "L'adresse publique est secrète, la clé privée est publique"
+    ],
+    answer: 1,
+    explanation: "Votre adresse publique (0x...) est votre IBAN crypto — partagez-la librement pour recevoir. Votre clé privée/seed phrase est le mot de passe absolu — la partager signifie perdre tous vos fonds."
+  }
+]);
+</script>
+</body>
+</html>

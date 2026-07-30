@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Découvrir la Technologie avec Idelphonse | Formation Web3 & Blockchain Gratuite</title>
+<meta name="description" content="Apprenez gratuitement le Web3, la Blockchain et les cryptomonnaies étape par étape. Formation complète pour débutants jusqu'au niveau ambassadeur. Référence francophone Web3 en Afrique."/>
+<meta name="keywords" content="apprendre blockchain, apprendre Web3, apprendre crypto, cours blockchain gratuit, devenir ambassadeur Web3, formation Web3 Afrique, apprendre Bitcoin, apprendre Ethereum"/>
+<meta property="og:title" content="Découvrir la Technologie avec Idelphonse"/>
+<meta property="og:description" content="Formation Web3 & Blockchain gratuite, du débutant à l'ambassadeur."/>
+<meta property="og:type" content="website"/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>⛓️</text></svg>"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#1e5fcc"/>
+        <path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/>
+        <circle cx="16" cy="16" r="3" fill="#00d4ff"/>
+        <circle cx="8" cy="16" r="2" fill="white" opacity=".6"/>
+        <circle cx="24" cy="16" r="2" fill="white" opacity=".6"/>
+        <circle cx="16" cy="8" r="2" fill="white" opacity=".6"/>
+        <circle cx="16" cy="24" r="2" fill="white" opacity=".6"/>
+        <line x1="10" y1="16" x2="13" y2="16" stroke="white" stroke-width="1" opacity=".4"/>
+        <line x1="19" y1="16" x2="22" y2="16" stroke="white" stroke-width="1" opacity=".4"/>
+        <line x1="16" y1="10" x2="16" y2="13" stroke="white" stroke-width="1" opacity=".4"/>
+        <line x1="16" y1="19" x2="16" y2="22" stroke="white" stroke-width="1" opacity=".4"/>
+      </svg>
+      <span>Idelphonse<span style="color:var(--accent)">Web3</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="debutant.html">Débutant</a>
+      <a href="intermediaire.html">Intermédiaire</a>
+      <a href="avance.html">Avancé</a>
+      <a href="ambassadeur.html">Ambassadeur</a>
+      <a href="glossaire.html">Glossaire</a>
+      <a href="coaching.html">Coaching</a>
+      <a href="contact.html">Contact</a>
+          <a href="dashboard.html">📊 Dashboard</a>
+      <a href="certification.html">🏆 Certif</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-dark-toggle" id="dark-toggle" title="Changer le thème">🌙</button>
+      <a href="coaching.html" class="btn btn-primary btn-sm">Coaching gratuit</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="debutant.html">🌱 Parcours Débutant</a>
+  <a href="intermediaire.html">📈 Parcours Intermédiaire</a>
+  <a href="avance.html">🚀 Parcours Avancé</a>
+  <a href="ambassadeur.html">🌍 Devenir Ambassadeur</a>
+  <a href="glossaire.html">📖 Glossaire Web3</a>
+  <a href="coaching.html">🎯 Coaching Personnel</a>
+  <a href="contact.html">📩 Contact</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="certification.html">🏆 Certification</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container grid-2" style="gap:60px;min-height:calc(100vh - var(--nav-h));padding-top:40px;padding-bottom:40px;">
+    <div class="hero-content animate-up">
+      <div class="eyebrow">🌍 Référence Francophone Web3 en Afrique</div>
+      <h1>Découvrir la <span>Technologie</span> avec Idelphonse</h1>
+      <p>Apprenez gratuitement le Web3, la Blockchain et les cryptomonnaies étape par étape — du zéro absolu jusqu'au niveau ambassadeur.</p>
+      <div class="hero-btns">
+        <a href="debutant.html" class="btn btn-primary btn-lg">🚀 Commencer maintenant</a>
+        <a href="#parcours" class="btn btn-outline btn-lg">Explorer les cours</a>
+        <a href="coaching.html" class="btn btn-accent btn-lg">💬 Réserver un coaching</a>
+      </div>
+      <p style="font-size:.8rem;color:rgba(255,255,255,.4);margin-top:20px;">✅ 100% gratuit &nbsp;·&nbsp; ✅ En français &nbsp;·&nbsp; ✅ Adapté à l'Afrique</p>
+    </div>
+
+    <div class="hero-visual animate-up-delay-1">
+      <div class="hero-card" style="position:relative;">
+        <div class="hero-badge">🏆 +500 apprenants</div>
+        <div class="hero-card-icon">⛓️</div>
+        <h3>Formation Web3 Complète</h3>
+        <p>De l'Internet aux DAO en passant par Bitcoin, DeFi, NFT et ambassadeur blockchain.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">8</div>
+            <div class="hero-stat-label">Modules</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">40+</div>
+            <div class="hero-stat-label">Leçons</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">3</div>
+            <div class="hero-stat-label">Niveaux</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">0 F</div>
+            <div class="hero-stat-label">Gratuit</div>
+          </div>
+        </div>
+        <a href="debutant.html" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px;">Démarrer gratuitement →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" data-count="500" data-suffix="+">0</div>
+        <div class="stat-label">Apprenants formés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="40" data-suffix="+">0</div>
+        <div class="stat-label">Leçons disponibles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="100" data-suffix="%">0</div>
+        <div class="stat-label">Contenu gratuit</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="3" data-suffix=" pays">0</div>
+        <div class="stat-label">Présence en Afrique</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARCOURS -->
+<section class="section" id="parcours">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">📚 Parcours d'apprentissage</div>
+      <h2>Trois niveaux, une progression logique</h2>
+      <p>Commencez où vous êtes. Avancez à votre rythme. Chaque niveau prépare le suivant.</p>
+    </div>
+
+    <div class="grid-3" style="gap:28px;">
+      <div class="path-card" data-reveal>
+        <div class="path-header">
+          <div class="path-icon" style="background:rgba(16,185,129,.12);font-size:2rem;">🌱</div>
+          <div>
+            <div class="eyebrow" style="color:#059669;">Niveau 1</div>
+            <h3>Parcours Débutant</h3>
+          </div>
+        </div>
+        <div class="path-list">
+          <div class="path-item">Internet & le Web</div>
+          <div class="path-item">Web1, Web2, Web3</div>
+          <div class="path-item">Introduction à la Blockchain</div>
+          <div class="path-item">Bitcoin & Ethereum</div>
+          <div class="path-item">Les cryptomonnaies</div>
+          <div class="path-item">Wallets & Seed Phrase</div>
+          <div class="path-item">Sécurité & arnaques</div>
+          <div class="path-item">Créer son premier wallet</div>
+        </div>
+        <a href="debutant.html" class="btn btn-ghost" style="width:100%;justify-content:center;">Démarrer →</a>
+      </div>
+
+      <div class="path-card" style="border-color:var(--blue-400);box-shadow:var(--shadow-blue);" data-reveal>
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--blue-500);color:#fff;font-size:.72rem;font-weight:700;padding:4px 16px;border-radius:50px;white-space:nowrap;">⭐ Recommandé</div>
+        <div class="path-header">
+          <div class="path-icon" style="background:rgba(30,95,204,.12);font-size:2rem;">📈</div>
+          <div>
+            <div class="eyebrow">Niveau 2</div>
+            <h3>Parcours Intermédiaire</h3>
+          </div>
+        </div>
+        <div class="path-list">
+          <div class="path-item">Smart Contracts & DApps</div>
+          <div class="path-item">CEX & DEX</div>
+          <div class="path-item">Stablecoins & Staking</div>
+          <div class="path-item">DeFi & Yield Farming</div>
+          <div class="path-item">NFT & DAO</div>
+          <div class="path-item">Layer 1 & Layer 2</div>
+          <div class="path-item">Tokenomics</div>
+          <div class="path-item">Gestion des risques</div>
+        </div>
+        <a href="intermediaire.html" class="btn btn-primary" style="width:100%;justify-content:center;">Continuer →</a>
+      </div>
+
+      <div class="path-card" data-reveal>
+        <div class="path-header">
+          <div class="path-icon" style="background:rgba(123,94,167,.12);font-size:2rem;">🚀</div>
+          <div>
+            <div class="eyebrow" style="color:var(--accent2);">Niveau 3</div>
+            <h3>Parcours Avancé</h3>
+          </div>
+        </div>
+        <div class="path-list">
+          <div class="path-item">Écosystèmes Blockchain</div>
+          <div class="path-item">Analyse de projets</div>
+          <div class="path-item">Airdrops & Testnets</div>
+          <div class="path-item">Marketing Web3</div>
+          <div class="path-item">Community Building</div>
+          <div class="path-item">Personal Branding</div>
+          <div class="path-item">Création de contenu</div>
+          <div class="path-item">Devenir Ambassadeur</div>
+        </div>
+        <a href="avance.html" class="btn btn-ghost" style="width:100%;justify-content:center;border-color:var(--accent2);color:var(--accent2);">Explorer →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES APERÇU -->
+<section class="section" style="background:var(--gray-100);padding:80px 0;">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">🎓 Modules populaires</div>
+      <h2>Ce que vous allez apprendre</h2>
+      <p>Des sujets concrets, expliqués simplement, avec des exemples tirés de la réalité africaine.</p>
+    </div>
+    <div class="grid-4">
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-blue">🌐</div>
+        <h3>Internet & Web3</h3>
+        <p>Comprendre comment fonctionne Internet, le Web et pourquoi Web3 est révolutionnaire.</p>
+        <div class="card-meta"><span class="badge">Débutant</span><span style="font-size:.78rem;color:var(--text-light);">3 leçons</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-gold">₿</div>
+        <h3>Bitcoin & Ethereum</h3>
+        <p>L'histoire, la technologie et le rôle de BTC et ETH dans l'écosystème crypto.</p>
+        <div class="card-meta"><span class="badge">Débutant</span><span style="font-size:.78rem;color:var(--text-light);">4 leçons</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-cyan">🔐</div>
+        <h3>Wallets & Sécurité</h3>
+        <p>Créer, sécuriser et gérer son portefeuille crypto. Éviter les arnaques courantes.</p>
+        <div class="card-meta"><span class="badge badge-green">Essentiel</span><span style="font-size:.78rem;color:var(--text-light);">5 leçons</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-purple">📜</div>
+        <h3>Smart Contracts</h3>
+        <p>Comprendre les contrats intelligents et les applications décentralisées (DApps).</p>
+        <div class="card-meta"><span class="badge badge-purple">Intermédiaire</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-green">💰</div>
+        <h3>DeFi</h3>
+        <p>La finance décentralisée : staking, yield farming, liquidity pools expliqués clairement.</p>
+        <div class="card-meta"><span class="badge badge-purple">Intermédiaire</span><span style="font-size:.78rem;color:var(--text-light);">4 leçons</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-gold">🖼️</div>
+        <h3>NFT & DAO</h3>
+        <p>Les jetons non fongibles et les organisations autonomes décentralisées.</p>
+        <div class="card-meta"><span class="badge badge-purple">Intermédiaire</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-cyan">🪂</div>
+        <h3>Airdrops & Testnets</h3>
+        <p>Trouver et participer aux meilleures opportunités gratuites de l'écosystème Web3.</p>
+        <div class="card-meta"><span class="badge badge-gold">Avancé</span></div>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-purple">🌍</div>
+        <h3>Ambassadeur Web3</h3>
+        <p>Postuler, représenter des projets, organiser des événements et bâtir une communauté.</p>
+        <div class="card-meta"><span class="badge badge-gold">Avancé</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">💬 Témoignages</div>
+      <h2>Ce que disent nos apprenants</h2>
+      <p>Des étudiants, entrepreneurs et futurs ambassadeurs qui ont transformé leur compréhension du Web3.</p>
+    </div>
+    <div class="grid-3">
+      <div class="testimonial-card" data-reveal>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Avant cette formation, je pensais que Bitcoin était réservé aux riches ou aux hackers. Maintenant je comprends la technologie et j'ai créé mon premier wallet !"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">KA</div>
+          <div>
+            <div class="author-name">Kofi Asante</div>
+            <div class="author-role">Étudiant en économie, Cotonou</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Idelphonse explique les concepts les plus complexes avec des exemples du quotidien africain. J'ai réussi à devenir ambassadeur d'un projet blockchain grâce à cette formation."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">FD</div>
+          <div>
+            <div class="author-name">Fatou Diallo</div>
+            <div class="author-role">Ambassadeur Web3, Dakar</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Le coaching individuel a été décisif. En 2 séances j'ai compris la DeFi et le staking. Je génère maintenant des revenus passifs en toute sécurité."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MM</div>
+          <div>
+            <div class="author-name">Moussa Maïga</div>
+            <div class="author-role">Entrepreneur, Lomé</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder-section">
+  <div class="container grid-2" style="gap:64px;align-items:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px;" data-reveal>
+      <div class="founder-img">👨‍💻</div>
+      <div class="founder-name" style="text-align:center;">Idelphonse AHOSSI</div>
+      <div class="founder-title" style="text-align:center;">Éducateur Web3 | Community Builder | Ambassadeur Blockchain</div>
+      <div class="social-links" style="justify-content:center;">
+        <a href="https://facebook.com/idelphonseahossi" class="social-link" title="Facebook">f</a>
+        <a href="https://x.com/idellphonse" class="social-link" title="X/Twitter">𝕏</a>
+        <a href="https://tiktok.com/@idellphonse" class="social-link" title="TikTok">♪</a>
+        <a href="https://t.me/idelphonse" class="social-link" title="Telegram">✈</a>
+        <a href="https://instagram.com/idelphonse" class="social-link" title="Instagram">◎</a>
+      </div>
+    </div>
+    <div class="founder-content" data-reveal>
+      <div class="eyebrow">À propos du fondateur</div>
+      <h2 style="color:#fff;margin-top:12px;">Un éducateur engagé pour l'Afrique numérique</h2>
+      <p style="margin-top:16px;">Idelphonse AHOSSI est un éducateur Web3, community builder et ambassadeur blockchain basé au Bénin. Passionné par la démocratisation de la technologie blockchain en Afrique francophone, il a créé cette plateforme pour aider chacun — étudiant, entrepreneur ou simple curieux — à comprendre et à profiter des opportunités du Web3.</p>
+      <p style="margin-top:16px;">Avec plusieurs années d'expérience dans l'écosystème blockchain et un réseau actif de communautés Web3, Idelphonse accompagne des centaines d'apprenants chaque année à travers des formations gratuites, des ateliers locaux et des coachings personnalisés.</p>
+      <div class="highlight-box" style="margin-top:24px;">
+        <p style="color:rgba(255,255,255,.7);font-size:.875rem;">"Comprendre aujourd'hui les technologies qui construiront demain."</p>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;">
+        <a href="coaching.html" class="btn btn-primary">Réserver un coaching</a>
+        <a href="contact.html" class="btn btn-outline">Me contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="eyebrow" style="color:rgba(255,255,255,.6);">Prêt à commencer ?</div>
+    <h2>Rejoignez la révolution Web3 dès aujourd'hui</h2>
+    <p>Gratuit, en français, adapté à l'Afrique. Commencez votre parcours en moins de 2 minutes.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="debutant.html" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,.4);color:#fff;">🌱 Commencer en débutant</a>
+      <a href="https://wa.me/2290152217284" class="btn btn-accent btn-lg" target="_blank">💬 WhatsApp Idelphonse</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" style="margin-bottom:0;">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#1e5fcc"/>
+            <path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/>
+            <circle cx="16" cy="16" r="3" fill="#00d4ff"/>
+          </svg>
+          <span style="color:#fff;">Idelphonse<span style="color:var(--accent)">Web3</span></span>
+        </a>
+        <p>La référence francophone d'éducation Web3 pour les étudiants, entrepreneurs et ambassadeurs blockchain en Afrique.</p>
+        <div class="social-links">
+          <a href="https://facebook.com/idelphonseahossi" class="social-link">f</a>
+          <a href="https://x.com/idellphonse" class="social-link">𝕏</a>
+          <a href="https://tiktok.com/@idellphonse" class="social-link">♪</a>
+          <a href="https://t.me/idelphonse" class="social-link">✈</a>
+          <a href="https://instagram.com/idelphonse" class="social-link">◎</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Parcours</h5>
+        <ul>
+          <li><a href="debutant.html">🌱 Débutant</a></li>
+          <li><a href="intermediaire.html">📈 Intermédiaire</a></li>
+          <li><a href="avance.html">🚀 Avancé</a></li>
+          <li><a href="ambassadeur.html">🌍 Ambassadeur</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Ressources</h5>
+        <ul>
+          <li><a href="glossaire.html">📖 Glossaire Web3</a></li>
+          <li><a href="coaching.html">🎯 Coaching</a></li>
+          <li><a href="contact.html">📩 Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact direct</h5>
+        <ul>
+          <li><a href="mailto:idelphonseahossi573@gmail.com">✉️ Email</a></li>
+          <li><a href="https://wa.me/2290152217284" target="_blank">💬 WhatsApp</a></li>
+          <li><a href="https://t.me/idelphonse" target="_blank">✈ Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Découvrir la Technologie avec Idelphonse. Tous droits réservés.</p>
+      <p style="color:rgba(255,255,255,.25);">Fait avec ❤️ au Bénin 🇧🇯</p>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" title="Retour en haut">↑</button>
+<script src="script.js"></script>
+<script src="progress.js"></script>
+
+<!-- ── FLOATING PROGRESS WIDGET ─────────────────────────── -->
+<div id="progressWidget" style="
+  position:fixed;bottom:80px;right:28px;
+  background:linear-gradient(135deg,var(--blue-800),var(--blue-700));
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:14px 18px;
+  display:none;flex-direction:column;gap:6px;
+  z-index:850;min-width:180px;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  backdrop-filter:blur(12px);
+  animation:fadeUp .4s ease;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+    <span style="font-size:.75rem;font-weight:600;color:rgba(255,255,255,.7);">MA PROGRESSION</span>
+    <a href="dashboard.html" style="font-size:.7rem;color:var(--accent);font-weight:600;">Voir →</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:50px;overflow:hidden;">
+      <div id="widgetBar" style="height:100%;width:0%;background:linear-gradient(90deg,#1e5fcc,#00d4ff);border-radius:50px;transition:width 1s ease;"></div>
+    </div>
+    <span id="widgetPct" style="font-family:var(--font-display);font-weight:700;color:var(--accent);font-size:.85rem;">0%</span>
+  </div>
+  <div style="font-size:.7rem;color:rgba(255,255,255,.4);" id="widgetModules">0 modules terminés</div>
+</div>
+<script>
+(function() {
+  setTimeout(function() {
+    if (typeof IDW3=== 'undefined') return;
+    var p = IDW3.getProgress();
+    var done = Object.keys(p.completed||{}).length;
+    var pct = IDW3.getGlobalPercent();
+    if (done === 0) return;
+    var w = document.getElementById('progressWidget');
+    document.getElementById('widgetBar').style.width = pct + '%';
+    document.getElementById('widgetPct').textContent = pct + '%';
+    document.getElementById('widgetModules').textContent = done + ' module' + (done>1?'s':'') + ' terminé' + (done>1?'s':'');
+    w.style.display = 'flex';
+  }, 1200);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Coaching Web3 Personnel — Idelphonse AHOSSI</title>
+<meta name="description" content="Coaching Web3 personnalisé : initiation blockchain, sécurisation de wallets, accompagnement ambassadeur, stratégie communautaire. Réservez votre session avec Idelphonse."/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🎯</text></svg>"/>
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg><span>Idelphonse<span style="color:var(--accent)">Web3</span></span></a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a><a href="debutant.html">Débutant</a><a href="intermediaire.html">Intermédiaire</a><a href="avance.html">Avancé</a><a href="ambassadeur.html">Ambassadeur</a><a href="glossaire.html">Glossaire</a><a href="coaching.html" class="active">Coaching</a><a href="contact.html">Contact</a>
+          <a href="dashboard.html">📊 Dashboard</a>
+      <a href="certification.html">🏆 Certif</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-dark-toggle" id="dark-toggle">🌙</button>
+      <a href="https://wa.me/2290152217284" target="_blank" class="btn btn-accent btn-sm">💬 Réserver maintenant</a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Accueil</a><a href="debutant.html">🌱 Débutant</a><a href="intermediaire.html">📈 Intermédiaire</a><a href="avance.html">🚀 Avancé</a><a href="ambassadeur.html">🌍 Ambassadeur</a><a href="glossaire.html">📖 Glossaire</a><a href="coaching.html">🎯 Coaching</a><a href="contact.html">📩 Contact</a>
+  <a href="dashboard.html">📊 Dashboard</a>
+  <a href="certification.html">🏆 Certification</a>
+</div>
+
+<!-- COACHING HERO -->
+<div class="coaching-hero">
+  <div class="container text-center">
+    <div class="breadcrumb" style="justify-content:center;"><a href="index.html">Accueil</a><span>›</span><span>Coaching Personnel</span></div>
+    <div class="eyebrow">🎯 Accompagnement Individuel</div>
+    <h1 style="color:#fff;margin-top:12px;">Coaching Web3 <span style="background:linear-gradient(90deg,var(--accent),var(--blue-300));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Personnalisé</span></h1>
+    <p style="color:rgba(255,255,255,.75);max-width:580px;margin:20px auto 36px;font-size:1.1rem;">Apprenez plus vite avec un accompagnement individuel adapté à votre niveau, vos objectifs et votre rythme. Sessions disponibles en français.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://wa.me/2290152217284?text=Bonjour Idelphonse, je souhaite réserver une session de coaching Web3" target="_blank" class="btn btn-accent btn-lg">💬 Réserver via WhatsApp</a>
+      <a href="#offres" class="btn btn-outline btn-lg">Voir les offres</a>
+    </div>
+    <!-- Stats -->
+    <div style="display:flex;gap:32px;justify-content:center;margin-top:52px;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:700;color:var(--accent);font-family:var(--font-display);">500+</div>
+        <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:4px;">Personnes formées</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:700;color:var(--accent);font-family:var(--font-display);">4.9★</div>
+        <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:4px;">Note moyenne</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:700;color:var(--accent);font-family:var(--font-display);">3 pays</div>
+        <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:4px;">Présence active</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2rem;font-weight:700;color:var(--accent);font-family:var(--font-display);">100%</div>
+        <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:4px;">En français</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POUR QUI -->
+<section class="section-sm" style="background:var(--gray-100);">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">🎯 Pour qui ?</div>
+      <h2>Ce coaching est fait pour vous si…</h2>
+    </div>
+    <div class="grid-3" style="gap:20px;">
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-green">🌱</div>
+        <h3>Débutant absolu</h3>
+        <p>Vous entendez parler de Bitcoin ou de blockchain et voulez vraiment comprendre sans être perdu dans le jargon technique.</p>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-blue">🎓</div>
+        <h3>Étudiant</h3>
+        <p>Vous voulez acquérir des compétences Web3 pour enrichir votre CV, décrocher un stage ou préparer votre carrière dans la tech.</p>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-gold">💼</div>
+        <h3>Entrepreneur</h3>
+        <p>Vous cherchez à intégrer la blockchain dans votre business, accepter les cryptos, ou comprendre les opportunités Web3 pour votre secteur.</p>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-cyan">🌍</div>
+        <h3>Futur Ambassadeur</h3>
+        <p>Vous visez à représenter des projets blockchain et avez besoin d'un accompagnement pour construire votre profil et décrocher vos premières missions.</p>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon icon-purple">📱</div>
+        <h3>Créateur de contenu</h3>
+        <p>Vous souhaitez vous lancer dans la création de contenu Web3 (YouTube, TikTok, Twitter) mais manquez de bases solides pour créer un contenu de qualité.</p>
+      </div>
+      <div class="course-card" data-reveal>
+        <div class="card-icon" style="background:rgba(240,192,64,.12);font-size:1.4rem;">👪</div>
+        <h3>Toute personne curieuse</h3>
+        <p>Quelle que soit votre situation, si vous voulez comprendre Web3 et ses opportunités, ce coaching est pour vous.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFRES -->
+<section class="section" id="offres">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">💎 Services de coaching</div>
+      <h2>Choisissez votre accompagnement</h2>
+      <p>Chaque session est adaptée à vos besoins spécifiques. Contactez Idelphonse pour discuter du format le mieux adapté à votre situation.</p>
+    </div>
+
+    <div class="grid-3" style="gap:24px;">
+      <div class="pricing-card" data-reveal>
+        <div class="card-icon icon-green" style="font-size:1.8rem;margin-bottom:16px;">🌱</div>
+        <h3>Initiation Web3</h3>
+        <p style="font-size:.875rem;color:var(--text-light);margin-bottom:4px;">Pour débutants complets</p>
+        <div class="pricing-list">
+          <li>Introduction à Bitcoin & Ethereum</li>
+          <li>Création & sécurisation de wallet (MetaMask / Trust Wallet)</li>
+          <li>Comprendre les transactions</li>
+          <li>Sécurité : éviter les arnaques</li>
+          <li>Premier achat de crypto guidé</li>
+          <li>Questions/réponses illimitées</li>
+        </div>
+        <a href="https://wa.me/2290152217284?text=Bonjour, je souhaite une session Initiation Web3" target="_blank" class="btn btn-accent" style="width:100%;justify-content:center;">💬 Réserver cette session</a>
+      </div>
+
+      <div class="pricing-card featured" data-reveal>
+        <div class="pricing-badge">⭐ Plus populaire</div>
+        <div class="card-icon icon-blue" style="font-size:1.8rem;margin-bottom:16px;">🚀</div>
+        <h3>Pack Complet Web3</h3>
+        <p style="font-size:.875rem;color:var(--text-light);margin-bottom:4px;">Du débutant à l'intermédiaire</p>
+        <div class="pricing-list">
+          <li>Tout le programme Initiation</li>
+          <li>DeFi : staking & yield farming</li>
+          <li>NFT : acheter, vendre, créer</li>
+          <li>Utilisation des DEX (Uniswap, PancakeSwap)</li>
+          <li>Stratégies d'airdrops & testnets</li>
+          <li>Analyse de projets Web3</li>
+          <li>Gestion du risque & portfolio</li>
+          <li>Support WhatsApp 7 jours</li>
+        </div>
+        <a href="https://wa.me/2290152217284?text=Bonjour, je souhaite le Pack Complet Web3" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;">💬 Réserver ce pack</a>
+      </div>
+
+      <div class="pricing-card" data-reveal>
+        <div class="card-icon icon-cyan" style="font-size:1.8rem;margin-bottom:16px;">🌍</div>
+        <h3>Coaching Ambassadeur</h3>
+        <p style="font-size:.875rem;color:var(--text-light);margin-bottom:4px;">Pour futurs ambassadeurs</p>
+        <div class="pricing-list">
+          <li>Audit & optimisation profil Web3</li>
+          <li>Construction du CV Ambassadeur</li>
+          <li>Préparation aux interviews</li>
+          <li>Stratégie Twitter/X & Discord</li>
+          <li>Plan de création de contenu</li>
+          <li>Identification des meilleurs programmes</li>
+          <li>Accompagnement pour 1ère candidature</li>
+          <li>Suivi post-obtention de mission</li>
+        </div>
+        <a href="https://wa.me/2290152217284?text=Bonjour, je souhaite un coaching Ambassadeur Web3" target="_blank" class="btn btn-accent" style="width:100%;justify-content:center;">💬 Réserver cette session</a>
+      </div>
+    </div>
+
+    <!-- AUTRES SERVICES -->
+    <div style="margin-top:48px;" data-reveal>
+      <h3 style="text-align:center;margin-bottom:28px;">Services supplémentaires</h3>
+      <div class="grid-4" style="gap:16px;">
+        <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px;text-align:center;transition:all var(--transition);" class="course-card">
+          <div style="font-size:2rem;margin-bottom:10px;">🏛️</div>
+          <h4 style="font-size:.95rem;margin-bottom:6px;">Formation Équipe</h4>
+          <p style="font-size:.78rem;">Formation collective pour entreprises, universités, associations (5 à 50 personnes)</p>
+        </div>
+        <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px;text-align:center;transition:all var(--transition);" class="course-card">
+          <div style="font-size:2rem;margin-bottom:10px;">📊</div>
+          <h4 style="font-size:.95rem;margin-bottom:6px;">Audit Portfolio</h4>
+          <p style="font-size:.78rem;">Analyse de votre portfolio crypto actuel et recommandations d'optimisation</p>
+        </div>
+        <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px;text-align:center;transition:all var(--transition);" class="course-card">
+          <div style="font-size:2rem;margin-bottom:10px;">🎪</div>
+          <h4 style="font-size:.95rem;margin-bottom:6px;">Organisation Événement</h4>
+          <p style="font-size:.78rem;">Aide à l'organisation de meetups, ateliers et Twitter Spaces Web3 locaux</p>
+        </div>
+        <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px;text-align:center;transition:all var(--transition);" class="course-card">
+          <div style="font-size:2rem;margin-bottom:10px;">🌐</div>
+          <h4 style="font-size:.95rem;margin-bottom:6px;">Traduction & Localisation</h4>
+          <p style="font-size:.78rem;">Traduction EN→FR de contenus Web3 (articles, annonces, docs techniques)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSUS -->
+<section class="section-sm" style="background:var(--gray-100);">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">📋 Comment ça marche ?</div>
+      <h2>Réserver une session en 3 étapes</h2>
+    </div>
+    <div class="grid-3" style="gap:24px;">
+      <div style="text-align:center;padding:32px 24px;" data-reveal>
+        <div style="width:64px;height:64px;background:linear-gradient(135deg,var(--blue-500),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.5rem;font-family:var(--font-display);font-weight:700;color:#fff;">1</div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px;">Contactez Idelphonse</h3>
+        <p style="font-size:.875rem;">Envoyez un message WhatsApp en précisant votre niveau, vos objectifs et vos disponibilités. Réponse garantie sous 24h.</p>
+        <a href="https://wa.me/2290152217284" target="_blank" class="btn btn-accent btn-sm" style="margin-top:16px;">💬 WhatsApp</a>
+      </div>
+      <div style="text-align:center;padding:32px 24px;" data-reveal>
+        <div style="width:64px;height:64px;background:linear-gradient(135deg,var(--blue-500),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.5rem;font-family:var(--font-display);font-weight:700;color:#fff;">2</div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px;">Session diagnostic gratuite</h3>
+        <p style="font-size:.875rem;">15 minutes d'échange pour évaluer votre niveau, comprendre vos objectifs et définir le programme adapté à vos besoins.</p>
+      </div>
+      <div style="text-align:center;padding:32px 24px;" data-reveal>
+        <div style="width:64px;height:64px;background:linear-gradient(135deg,var(--blue-500),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.5rem;font-family:var(--font-display);font-weight:700;color:#fff;">3</div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px;">Commencez votre parcours</h3>
+        <p style="font-size:.875rem;">Sessions individuelles via WhatsApp, Zoom ou en présentiel (Cotonou/Porto-Novo). Ressources partagées après chaque session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">💬 Témoignages</div>
+      <h2>Résultats concrets de nos apprenants</h2>
+    </div>
+    <div class="grid-3">
+      <div class="testimonial-card" data-reveal>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"En 3 sessions j'ai créé mon wallet, compris la DeFi et participé à mon premier airdrop. Idelphonse explique avec des exemples concrets tirés de notre réalité africaine."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AT</div>
+          <div><div class="author-name">Adjovi Toussaint</div><div class="author-role">Étudiant, Cotonou</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Grâce au coaching ambassadeur, j'ai décroché un programme pour un projet Ethereum tier-1 en 6 semaines. Mon CV Web3 a été entièrement retravaillé et ma stratégie Twitter redéfinie."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SB</div>
+          <div><div class="author-name">Sanaa Bello</div><div class="author-role">Ambassadeur Web3, Dakar</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"J'étais entrepreneur et je voulais accepter les cryptos dans mon business. Idelphonse m'a tout expliqué : wallets business, stablecoins, fiscalité. Très professionnel."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">DK</div>
+          <div><div class="author-name">Dieudonné Koffi</div><div class="author-role">Entrepreneur, Lomé</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ COACHING -->
+<section class="section-sm" style="background:var(--gray-100);">
+  <div class="container" style="max-width:720px;">
+    <div class="section-header text-center" data-reveal>
+      <div class="eyebrow">❓ FAQ</div>
+      <h2>Questions fréquentes</h2>
+    </div>
+    <div class="accordion" data-reveal>
+      <div class="accordion-item">
+        <button class="accordion-trigger">Le coaching est-il payant ? <span class="accordion-chevron">▼</span></button>
+        <div class="accordion-body"><p>La première session de diagnostic (15 min) est gratuite pour tout le monde. Les sessions complètes sont accessibles à un tarif adapté aux réalités africaines. Contactez Idelphonse directement sur WhatsApp pour connaître les tarifs actuels selon votre programme choisi.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger">Comment se déroulent les sessions ? <span class="accordion-chevron">▼</span></button>
+        <div class="accordion-body"><p>Les sessions se déroulent principalement via WhatsApp (appel ou vidéo), Zoom, Google Meet, ou en présentiel si vous êtes dans la région de Cotonou/Porto-Novo. La durée standard est de 60 à 90 minutes par session.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger">Combien de sessions faut-il pour voir des résultats ? <span class="accordion-chevron">▼</span></button>
+        <div class="accordion-body"><p>Cela dépend de votre objectif. Pour créer et sécuriser votre wallet : 1 session suffit. Pour comprendre la DeFi et commencer à l'utiliser : 3-4 sessions. Pour préparer un profil ambassadeur complet : 5-8 sessions selon votre niveau de départ.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger">Faut-il avoir des connaissances préalables ? <span class="accordion-chevron">▼</span></button>
+        <div class="accordion-body"><p>Absolument pas. Idelphonse a accompagné des apprenants partant de zéro — des personnes qui n'avaient jamais entendu parler de blockchain. La pédagogie est adaptée à votre niveau actuel, quel qu'il soit.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger">Proposez-vous des sessions en groupe ? <span class="accordion-chevron">▼</span></button>
+        <div class="accordion-body"><p>Oui, Idelphonse propose des formations collectives pour les universités, associations et entreprises. Les groupes de 5 à 50 personnes sont accueillis, en présentiel ou en ligne. Contactez par WhatsApp pour un devis adapté à votre structure.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAND CTA FINAL -->
+<section style="background:linear-gradient(135deg,#25d366,#128c7e);padding:96px 0;text-align:center;">
+  <div class="container">
+    <div style="font-size:3rem;margin-bottom:20px;">💬</div>
+    <h2 style="color:#fff;font-size:2.2rem;margin-bottom:16px;">Commencez votre transformation Web3 aujourd'hui</h2>
+    <p style="color:rgba(255,255,255,.85);font-size:1.1rem;max-width:520px;margin:0 auto 36px;">Un seul message suffit. Idelphonse vous répond sous 24h et vous aide à définir le parcours idéal pour votre situation.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://wa.me/2290152217284?text=Bonjour Idelphonse ! Je souhaite commencer un coaching Web3. Pouvez-vous me guider ?" target="_blank" class="btn btn-lg" style="background:#fff;color:#128c7e;font-weight:700;font-size:1rem;">
+        💬 Envoyer un message WhatsApp
+      </a>
+      <a href="mailto:idelphonseahossi573@gmail.com" class="btn btn-lg btn-outline" style="border-color:rgba(255,255,255,.5);color:#fff;">
+        ✉️ Envoyer un email
+      </a>
+    </div>
+    <p style="color:rgba(255,255,255,.6);font-size:.8rem;margin-top:20px;">+229 01 52 21 72 84 · idelphonseahossi573@gmail.com</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg><span style="color:#fff;">Idelphonse<span style="color:var(--accent)">Web3</span></span></a><p>Formation Web3 gratuite en français pour l'Afrique.</p></div>
+      <div class="footer-col"><h5>Parcours</h5><ul><li><a href="debutant.html">🌱 Débutant</a></li><li><a href="intermediaire.html">📈 Intermédiaire</a></li><li><a href="avance.html">🚀 Avancé</a></li><li><a href="ambassadeur.html">🌍 Ambassadeur</a></li></ul></div>
+      <div class="footer-col"><h5>Ressources</h5><ul><li><a href="glossaire.html">📖 Glossaire</a></li><li><a href="coaching.html">🎯 Coaching</a></li><li><a href="contact.html">📩 Contact</a></li></ul></div>
+      <div class="footer-col"><h5>Contact direct</h5><ul><li><a href="mailto:idelphonseahossi573@gmail.com">✉️ Email</a></li><li><a href="https://wa.me/2290152217284" target="_blank">💬 WhatsApp</a></li><li><a href="https://t.me/idelphonse" target="_blank">✈ Telegram</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Découvrir la Technologie avec Idelphonse.</p><p style="color:rgba(255,255,255,.25);">Fait avec ❤️ au Bénin 🇧🇯</p></div>
+  </div>
+</footer>
+<button id="back-to-top" title="Retour en haut">↑</button>
+<script src="script.js"></script>
+<script src="progress.js"></script>
+</body>
+</html>

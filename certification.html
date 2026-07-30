@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Certification Web3 — Examen Final | Idelphonse</title>
+<meta name="description" content="Passez l'examen de certification Web3 et obtenez votre certificat officiel signé par Idelphonse AHOSSI."/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🏆</text></svg>"/>
+<style>
+/* ── CERTIFICATION STYLES ──────────────────────────────────── */
+.exam-hero {
+  background: linear-gradient(135deg, #0a0e1a, #0d1f45);
+  padding: 110px 0 70px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.exam-hero::before {
+  content:''; position:absolute; top:-30%; left:50%; transform:translateX(-50%);
+  width:70vw; height:70vw;
+  background: radial-gradient(circle, rgba(240,192,64,.06) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+/* Exam container */
+.exam-card {
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.exam-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+}
+.exam-timer {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(0,212,255,.08);
+  border: 1px solid rgba(0,212,255,.2);
+  border-radius: var(--radius);
+  padding: 8px 20px;
+}
+.exam-timer.warning { color: #f59e0b; border-color: rgba(245,158,11,.3); background: rgba(245,158,11,.08); }
+.exam-timer.danger  { color: #ef4444; border-color: rgba(239,68,68,.3); background: rgba(239,68,68,.08); }
+
+.exam-q-number {
+  font-family: var(--font-display);
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.exam-question {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 24px;
+  line-height: 1.45;
+}
+[data-theme="dark"] .exam-question { color: var(--text); }
+.exam-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.exam-option {
+  padding: 14px 18px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: .9rem;
+  color: var(--text-light);
+  background: var(--white);
+  transition: all var(--transition);
+  text-align: left;
+  display: flex; align-items: center; gap: 12px;
+}
+[data-theme="dark"] .exam-option { background: var(--blue-800); }
+.exam-option:hover { border-color: var(--blue-400); color: var(--blue-400); }
+.exam-option.selected { border-color: var(--blue-500); background: rgba(30,95,204,.08); color: var(--blue-500); }
+.exam-option.correct  { border-color: #059669; background: rgba(5,150,105,.08); color: #059669; }
+.exam-option.wrong    { border-color: #dc2626; background: rgba(220,38,38,.08); color: #dc2626; }
+.option-letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gray-200);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 700; flex-shrink: 0;
+  transition: all var(--transition);
+}
+.exam-option.selected .option-letter { background: var(--blue-500); color: #fff; }
+.exam-option.correct  .option-letter { background: #059669; color: #fff; }
+.exam-option.wrong    .option-letter { background: #dc2626; color: #fff; }
+
+.exam-progress-dots {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gray-200); transition: all var(--transition);
+}
+.dot.answered { background: var(--blue-500); }
+.dot.current  { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.dot.correct  { background: #059669; }
+.dot.wrong    { background: #dc2626; }
+
+/* Certificate */
+#certificateWrap {
+  display: none;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.certificate {
+  background: #fff;
+  border: 8px solid;
+  border-image: linear-gradient(135deg, #1e5fcc, #00d4ff, #7b5ea7) 1;
+  border-radius: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0,0,0,.3);
+  font-family: 'Georgia', serif;
+  color: #1a1f2e;
+  width: 100%;
+  aspect-ratio: 1.414 / 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.cert-bg-deco {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(30,95,204,.04) 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(0,212,255,.04) 0%, transparent 50%),
+    radial-gradient(circle at 90% 10%, rgba(123,94,167,.04) 0%, transparent 50%);
+}
+.cert-corner {
+  position: absolute;
+  width: 80px; height: 80px;
+  opacity: .15;
+}
+.cert-corner.tl { top: 16px; left: 16px; }
+.cert-corner.tr { top: 16px; right: 16px; transform: scaleX(-1); }
+.cert-corner.bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+.cert-corner.br { bottom: 16px; right: 16px; transform: scale(-1); }
+.cert-inner { position: relative; z-index: 1; text-align: center; padding: 40px 60px; width: 100%; }
+.cert-logo-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+.cert-org { font-family: 'Space Grotesk', var(--font-display), sans-serif; font-size: 1rem; font-weight: 700; color: #1e5fcc; letter-spacing: .05em; }
+.cert-divider { width: 120px; height: 2px; background: linear-gradient(90deg,transparent,#1e5fcc,transparent); margin: 0 auto 16px; }
+.cert-presents { font-size: .8rem; text-transform: uppercase; letter-spacing: .15em; color: #6b7280; margin-bottom: 8px; }
+.cert-title { font-size: 2rem; font-weight: 700; color: #0a0e1a; margin-bottom: 6px; line-height: 1.1; }
+.cert-subtitle { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: #6b7280; margin-bottom: 20px; }
+.cert-awarded-to { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: #6b7280; margin-bottom: 4px; }
+.cert-name { font-size: 2.4rem; font-style: italic; color: #1e5fcc; margin-bottom: 8px; font-family: 'Georgia', serif; }
+.cert-body { font-size: .8rem; color: #374151; max-width: 480px; margin: 0 auto 16px; line-height: 1.6; }
+.cert-score-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #1e5fcc, #00d4ff);
+  color: #fff;
+  font-family: var(--font-display, sans-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 8px 24px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+}
+.cert-signature-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px; align-items: end; margin-top: 8px; padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+.cert-sig-block { text-align: center; }
+.cert-sig-img { height: 50px; object-fit: contain; margin: 0 auto 4px; display: block; }
+.cert-sig-name { font-size: .7rem; font-weight: 700; color: #1a1f2e; }
+.cert-sig-role { font-size: .62rem; color: #6b7280; }
+.cert-meta-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; font-size: .65rem; color: #9ca3af;
+}
+.cert-qr { width: 52px; height: 52px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: .5rem; color: #9ca3af; text-align: center; }
+.cert-seal {
+  position: absolute;
+  right: 48px; top: 50%;
+  transform: translateY(-50%);
+  width: 80px; height: 80px;
+  border: 3px solid rgba(30,95,204,.2);
+  border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(circle, rgba(30,95,204,.05), transparent);
+  font-size: .42rem;
+  color: #1e5fcc;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  opacity: .6;
+}
+
+/* Score screen */
+.score-screen {
+  text-align: center; padding: 40px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  max-width: 560px;
+  margin: 0 auto;
+}
+.score-ring-wrap { position: relative; display: inline-block; margin-bottom: 24px; }
+.score-value {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+}
+.score-grade { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+.name-input-cert {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 12px;
+}
+[data-theme="dark"] .name-input-cert { background: var(--blue-800); border-color: var(--gray-300); }
+.name-input-cert:focus { outline: none; border-color: var(--blue-400); }
+
+@media print {
+  body > *:not(#printArea) { display: none !important; }
+  #printArea { display: block !important; }
+  .certificate { box-shadow: none; border: 6px solid #1e5fcc; }
+}
+@media(max-width:640px){
+  .cert-inner { padding: 24px 20px; }
+  .cert-title { font-size: 1.4rem; }
+  .cert-name  { font-size: 1.6rem; }
+  .cert-signature-row { grid-template-columns: 1fr; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg><span>Idelphonse<span style="color:var(--accent)">Web3</span></span></a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a><a href="debutant.html">Débutant</a><a href="intermediaire.html">Intermédiaire</a><a href="avance.html">Avancé</a><a href="glossaire.html">Glossaire</a><a href="dashboard.html">Dashboard</a><a href="certification.html" class="active">Certification</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-dark-toggle" id="dark-toggle">🌙</button>
+      <a href="dashboard.html" class="btn btn-primary btn-sm">📊 Dashboard</a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Accueil</a><a href="debutant.html">🌱 Débutant</a><a href="intermediaire.html">📈 Intermédiaire</a><a href="avance.html">🚀 Avancé</a><a href="dashboard.html">📊 Dashboard</a><a href="certification.html">🏆 Certification</a><a href="coaching.html">🎯 Coaching</a>
+</div>
+
+<!-- HERO -->
+<div class="exam-hero">
+  <div class="container">
+    <div class="eyebrow" style="color:var(--gold);">🏆 Examen officiel</div>
+    <h1 style="color:#fff;margin-top:12px;">Certification Web3 Idelphonse</h1>
+    <p style="color:rgba(255,255,255,.7);max-width:540px;margin:16px auto 0;font-size:1.05rem;">20 questions · 30 minutes · Score minimum 60% pour certifier</p>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+      <span style="background:rgba(240,192,64,.15);color:var(--gold);padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;">📋 20 questions</span>
+      <span style="background:rgba(0,212,255,.1);color:var(--accent);padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;">⏱ 30 minutes</span>
+      <span style="background:rgba(16,185,129,.1);color:#4ade80;padding:6px 16px;border-radius:50px;font-size:.8rem;font-weight:600;">✅ Certificat PDF</span>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- START SCREEN -->
+    <div id="startScreen" style="max-width:640px;margin:0 auto;text-align:center;">
+      <div class="exam-card">
+        <div style="font-size:3.5rem;margin-bottom:20px;">🏆</div>
+        <h2 style="margin-bottom:12px;">Prêt à passer l'examen ?</h2>
+        <p style="margin-bottom:28px;">L'examen couvre tous les modules : Blockchain, Bitcoin, Wallets, DeFi, NFT, DAO, Smart Contracts et les bonnes pratiques de sécurité.</p>
+        <div style="background:rgba(30,95,204,.06);border:1px solid rgba(30,95,204,.12);border-radius:var(--radius);padding:20px;margin-bottom:28px;text-align:left;">
+          <h4 style="margin-bottom:12px;">📋 Règles de l'examen</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:.875rem;color:var(--text-light);">✦ 20 questions à choix unique</li>
+            <li style="font-size:.875rem;color:var(--text-light);">✦ 30 minutes pour répondre</li>
+            <li style="font-size:.875rem;color:var(--text-light);">✦ Score minimum requis : 60%</li>
+            <li style="font-size:.875rem;color:var(--text-light);">✦ Vous pouvez retenter l'examen autant de fois que nécessaire</li>
+            <li style="font-size:.875rem;color:var(--text-light);">✦ Certificat généré immédiatement après réussite</li>
+          </ul>
+        </div>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label class="form-label">Votre nom complet (pour le certificat)</label>
+          <input type="text" id="certName" class="name-input-cert" placeholder="ex: Kofi Asante" maxlength="60"/>
+        </div>
+        <button id="startBtn" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">🚀 Démarrer l'examen</button>
+        <p style="font-size:.75rem;color:var(--text-light);margin-top:12px;">Prérequis recommandé : avoir complété au moins le parcours Débutant et Intermédiaire.</p>
+      </div>
+    </div>
+
+    <!-- EXAM SCREEN -->
+    <div id="examScreen" style="display:none;">
+      <div class="exam-card">
+        <div class="exam-header">
+          <div>
+            <div style="font-weight:700;font-size:1rem;">Examen de Certification Web3</div>
+            <div id="questionCounter" style="font-size:.8rem;color:var(--text-light);">Question 1 / 20</div>
+          </div>
+          <div class="exam-timer" id="examTimer">30:00</div>
+        </div>
+        <div class="exam-progress-dots" id="progressDots"></div>
+        <div class="exam-q-number" id="qNumber">Question 1</div>
+        <div class="exam-question" id="qText"></div>
+        <div class="exam-options" id="qOptions"></div>
+        <div id="qFeedback" style="margin-bottom:16px;"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <button id="prevBtn" class="btn btn-ghost btn-sm" style="display:none;">← Précédent</button>
+          <button id="nextBtn" class="btn btn-primary" style="margin-left:auto;" disabled>Suivant →</button>
+          <button id="submitBtn" class="btn btn-primary" style="display:none;background:linear-gradient(135deg,#059669,#10b981);">✅ Terminer l'examen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCORE SCREEN -->
+    <div id="scoreScreen" style="display:none;">
+      <div class="score-screen">
+        <div class="score-ring-wrap">
+          <svg width="140" height="140" viewBox="0 0 140 140" style="transform:rotate(-90deg);">
+            <defs><linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1e5fcc"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/>
+            <circle id="scoreRing" cx="70" cy="70" r="58" fill="none" stroke="url(#scoreGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="364"/>
+          </svg>
+          <div class="score-value" id="scoreValue" style="color:var(--accent);">0%</div>
+        </div>
+        <div class="score-grade" id="scoreGrade"></div>
+        <p id="scoreMsg" style="margin-bottom:24px;"></p>
+        <div id="scoreActions"></div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE -->
+    <div id="certificateWrap">
+      <div style="text-align:center;margin-bottom:24px;">
+        <h2 style="margin-bottom:8px;">🎉 Félicitations ! Voici votre certificat</h2>
+        <p style="color:var(--text-light);">Téléchargez-le, partagez-le et faites vérifier son authenticité.</p>
+      </div>
+
+      <div id="printArea">
+        <div class="certificate" id="certEl">
+          <div class="cert-bg-deco"></div>
+          <!-- Corner ornaments -->
+          <svg class="cert-corner tl" viewBox="0 0 80 80"><path d="M0,0 L80,0 L80,8 L8,8 L8,80 L0,80 Z" fill="#1e5fcc"/><path d="M16,16 L50,16 L50,22 L22,22 L22,50 L16,50 Z" fill="#1e5fcc" opacity=".4"/></svg>
+          <svg class="cert-corner tr" viewBox="0 0 80 80"><path d="M0,0 L80,0 L80,80 L72,80 L72,8 L0,8 Z" fill="#1e5fcc"/><path d="M30,16 L64,16 L64,50 L58,50 L58,22 L30,22 Z" fill="#1e5fcc" opacity=".4"/></svg>
+          <svg class="cert-corner bl" viewBox="0 0 80 80"><path d="M0,0 L8,0 L8,72 L80,72 L80,80 L0,80 Z" fill="#1e5fcc"/><path d="M16,30 L22,30 L22,58 L50,58 L50,64 L16,64 Z" fill="#1e5fcc" opacity=".4"/></svg>
+          <svg class="cert-corner br" viewBox="0 0 80 80"><path d="M72,0 L80,0 L80,80 L0,80 L0,72 L72,72 Z" fill="#1e5fcc"/><path d="M58,16 L64,16 L64,64 L30,64 L30,58 L58,58 Z" fill="#1e5fcc" opacity=".4"/></svg>
+
+          <div class="cert-inner">
+            <div class="cert-logo-row">
+              <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="6" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg>
+              <span class="cert-org">DÉCOUVRIR LA TECHNOLOGIE AVEC IDELPHONSE</span>
+            </div>
+            <div class="cert-divider"></div>
+            <div class="cert-presents">Certifie que</div>
+            <div class="cert-name" id="certNameDisplay">Prénom Nom</div>
+            <div class="cert-title">CERTIFICATION WEB3</div>
+            <div class="cert-subtitle">Blockchain · Cryptomonnaies · DeFi · NFT · Ambassadeur</div>
+            <div class="cert-body">
+              A réussi avec succès l'examen de certification Web3, démontrant une compréhension solide de la technologie blockchain, des cryptomonnaies, de la finance décentralisée et des pratiques de sécurité numérique.
+            </div>
+            <div class="cert-score-badge" id="certScoreDisplay">Score : 85% — Mention Bien</div>
+
+            <div class="cert-signature-row">
+              <div class="cert-sig-block">
+                <div style="font-size:.65rem;color:#9ca3af;margin-bottom:4px;">Date de délivrance</div>
+                <div style="font-size:.78rem;font-weight:700;" id="certDateDisplay">—</div>
+              </div>
+              <div class="cert-sig-block">
+                <img id="certSigImg" class="cert-sig-img" src="" alt="Signature Idelphonse AHOSSI"/>
+                <div class="cert-sig-name">Idelphonse AHOSSI</div>
+                <div class="cert-sig-role">Fondateur & Éducateur Web3</div>
+              </div>
+              <div class="cert-sig-block">
+                <div style="font-size:.65rem;color:#9ca3af;margin-bottom:4px;">Identifiant</div>
+                <div class="cert-qr" id="certQREl">QR</div>
+                <div style="font-size:.6rem;color:#9ca3af;margin-top:2px;" id="certIdDisplay">—</div>
+              </div>
+            </div>
+
+            <div class="cert-meta-row">
+              <span>Vérifiez ce certificat sur : <strong id="certVerifyUrl">—</strong></span>
+              <span>Délivré par Découvrir la Technologie avec Idelphonse · Bénin 🇧🇯</span>
+            </div>
+          </div>
+
+          <div class="cert-seal">
+            <div style="font-size:.55rem;">⭐</div>
+            <div>CERTIFIÉ</div>
+            <div>WEB3</div>
+            <div>IDELPHONSE</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
+        <button onclick="downloadCert()" class="btn btn-primary btn-lg">⬇️ Télécharger PDF</button>
+        <a id="verifyLink" href="#" class="btn btn-ghost btn-lg">✅ Vérifier le certificat</a>
+        <a href="dashboard.html" class="btn btn-outline btn-lg" style="border-color:var(--gray-300);color:var(--text-light);">📊 Voir mon dashboard</a>
+      </div>
+
+      <div style="background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);border-radius:var(--radius-lg);padding:20px;text-align:center;margin-top:24px;">
+        <p style="font-size:.875rem;color:#4ade80;margin:0;">💬 Partagez votre réussite ! Envoyez votre certificat à <a href="https://wa.me/2290152217284" target="_blank" style="color:#4ade80;font-weight:600;">Idelphonse sur WhatsApp</a> pour une validation officielle.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1e5fcc"/><path d="M8 16 L16 8 L24 16 L16 24 Z" fill="none" stroke="#00d4ff" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="#00d4ff"/></svg><span style="color:#fff;">Idelphonse<span style="color:var(--accent)">Web3</span></span></a><p>Formation Web3 gratuite en français pour l'Afrique.</p></div>
+      <div class="footer-col"><h5>Parcours</h5><ul><li><a href="debutant.html">🌱 Débutant</a></li><li><a href="intermediaire.html">📈 Intermédiaire</a></li><li><a href="avance.html">🚀 Avancé</a></li></ul></div>
+      <div class="footer-col"><h5>Mon espace</h5><ul><li><a href="dashboard.html">📊 Dashboard</a></li><li><a href="certification.html">🏆 Certification</a></li><li><a href="verification.html">✅ Vérification</a></li></ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul><li><a href="mailto:idelphonseahossi573@gmail.com">✉️ Email</a></li><li><a href="https://wa.me/2290152217284" target="_blank">💬 WhatsApp</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Découvrir la Technologie avec Idelphonse.</p><p style="color:rgba(255,255,255,.25);">Fait avec ❤️ au Bénin 🇧🇯</p></div>
+  </div>
+</footer>
+
+<button id="back-to-top" title="Retour en haut">↑</button>
+<script src="script.js"></script>
+<script src="progress.js"></script>
+<script src="signature.js"></script>
+<script>
+/* ── EXAM DATA ─────────────────────────────────────────────── */
+const EXAM_QUESTIONS = [
+  { q:"Qu'est-ce que la blockchain ?", opts:["Un réseau social décentralisé","Un registre numérique partagé, décentralisé et immuable","Un système de paiement géré par des banques","Un type de monnaie électronique créée par les gouvernements"], a:1, exp:"La blockchain est un registre distribué où chaque bloc est lié cryptographiquement au précédent, rendant les données immuables." },
+  { q:"Quelle est la limite maximale d'émission de Bitcoin ?", opts:["100 millions de BTC","1 milliard de BTC","21 millions de BTC","Illimité"], a:2, exp:"Bitcoin est limité à 21 millions d'unités, programmé dans son code source. Cette rareté est au cœur de sa valeur." },
+  { q:"Que signifie 'Not your keys, not your coins' ?", opts:["Il faut changer ses clés fréquemment","Si vous ne contrôlez pas votre clé privée, vous ne contrôlez pas vraiment vos cryptos","Les clés numériques sont plus sûres que les physiques","Il est impossible de récupérer ses cryptos sans clé"], a:1, exp:"Si vous déposez sur un CEX, l'exchange contrôle les clés. En cas de faillite (ex: FTX), vous pouvez perdre tous vos fonds." },
+  { q:"Qu'est-ce qu'une Seed Phrase ?", opts:["Un mot de passe numérique pour un CEX","Un code PIN pour déverrouiller MetaMask","Une suite de 12 ou 24 mots permettant de récupérer son wallet","Un identifiant unique fourni par la blockchain"], a:2, exp:"La seed phrase est la clé maîtresse de votre wallet. Elle permet de restaurer l'accès à tous vos fonds sur n'importe quel appareil." },
+  { q:"Quelle est la différence principale entre un CEX et un DEX ?", opts:["Le CEX est gratuit, le DEX est payant","Sur un CEX, l'entreprise garde vos fonds; sur un DEX, vous gardez le contrôle via votre wallet","Le DEX n'accepte que Bitcoin","Le CEX est décentralisé, le DEX est centralisé"], a:1, exp:"Sur un CEX (Binance, Bybit), vous confiez vos fonds à la plateforme. Sur un DEX (Uniswap), vous échangez directement depuis votre wallet." },
+  { q:"Qu'est-ce qu'un Smart Contract ?", opts:["Un contrat numérique signé par un avocat","Un programme auto-exécutant stocké sur la blockchain","Un type de transaction bancaire sécurisée","Un système de vote décentralisé"], a:1, exp:"Les smart contracts s'exécutent automatiquement quand les conditions prédéfinies sont remplies, sans intermédiaire humain." },
+  { q:"Quel est le mécanisme de consensus d'Ethereum depuis 'The Merge' ?", opts:["Proof of Work (PoW)","Proof of Authority (PoA)","Proof of Stake (PoS)","Delegated Proof of Stake (DPoS)"], a:2, exp:"Ethereum a migré vers le Proof of Stake en septembre 2022 ('The Merge'), réduisant sa consommation énergétique de 99,95%." },
+  { q:"Qu'est-ce qu'un NFT ?", opts:["Une cryptomonnaie stable ancrée au dollar","Un jeton numérique unique prouvant la propriété d'un actif","Un type de smart contract DeFi","Un réseau blockchain de deuxième couche"], a:1, exp:"NFT = Non-Fungible Token. Contrairement au BTC ou ETH, chaque NFT est unique et non-interchangeable. Il prouve la propriété d'un actif numérique." },
+  { q:"Qu'est-ce que la DeFi ?", opts:["Un réseau décentralisé de fournisseurs d'accès Internet","Un système financier basé sur des smart contracts, sans banques ni intermédiaires","Une cryptomonnaie émise par la Banque Mondiale","Un protocole de sécurité pour les wallets"], a:1, exp:"La DeFi (Finance Décentralisée) regroupe les services financiers (prêts, échanges, épargne) fonctionnant via des smart contracts sur la blockchain." },
+  { q:"Quel stablecoin est considéré comme le plus transparent et audité régulièrement ?", opts:["USDT (Tether)","DAI","USDC (Circle)","BUSD"], a:2, exp:"USDC (Circle) est réputé pour ses audits réguliers et sa transparence sur les réserves en dollars qui le collatéralisent." },
+  { q:"Qu'est-ce qu'un airdrop en Web3 ?", opts:["Une attaque informatique sur un réseau blockchain","Une distribution gratuite de tokens à des adresses éligibles","Un type de transaction instantanée","Un protocole de communication entre blockchains"], a:1, exp:"Les airdrops récompensent les premiers utilisateurs d'un protocole. Des projets comme Uniswap et Arbitrum ont distribué des milliers de dollars via airdrops." },
+  { q:"Qu'est-ce qu'une DAO ?", opts:["Une banque décentralisée africaine","Un algorithme de consensus","Une organisation autonome dont les règles sont codifiées dans des smart contracts","Un type de token de gouvernance"], a:2, exp:"DAO = Decentralized Autonomous Organization. Les décisions sont prises par vote des détenteurs de tokens. Pas de PDG ni de conseil d'administration." },
+  { q:"Quel risque est associé au Yield Farming ?", opts:["Slashing des validateurs","Impermanent Loss","Gas fees négatifs","Double dépense"], a:1, exp:"L'Impermanent Loss survient quand les prix des tokens déposés dans un pool de liquidité évoluent défavorablement par rapport au prix d'entrée." },
+  { q:"Que fait un Bridge en Web3 ?", opts:["Connecte un wallet à Internet","Transfère des tokens d'une blockchain à une autre","Valide les transactions sur Layer 2","Crée de nouveaux tokens natifs"], a:1, exp:"Un Bridge (pont) permet de transférer des actifs entre différentes blockchains. Ex: passer des ETH d'Ethereum vers Arbitrum via un bridge officiel." },
+  { q:"Quelle est la première chose à vérifier avant d'investir dans un projet Web3 ?", opts:["Le prix du token sur CoinMarketCap","L'existence d'un audit de sécurité et la transparence de l'équipe","Le nombre de followers sur Twitter","Le montant des gas fees"], a:1, exp:"Un audit de sécurité par des entreprises reconnues (CertiK, Hacken) et une équipe identifiable et vérifiable sont les premiers indicateurs de sérieux." },
+  { q:"Qu'est-ce qu'un Layer 2 ?", opts:["Une deuxième couche de sécurité physique pour les cold wallets","Une solution construite sur un Layer 1 pour accélérer les transactions et réduire les coûts","Un protocole de deuxième génération pour Bitcoin","Un réseau parallèle indépendant d'Ethereum"], a:1, exp:"Les L2 (Arbitrum, Optimism, Polygon) regroupent les transactions off-chain pour les soumettre en lot au L1, héritant de sa sécurité tout en étant plus rapides." },
+  { q:"Quelle action représente un 'red flag' absolu dans un projet crypto ?", opts:["Une équipe qui publie un whitepaper","Des gas fees élevés pour les transactions","Un fondateur qui demande votre seed phrase","Un audit de sécurité récent"], a:2, exp:"Aucune entité légitime ne vous demandera jamais votre seed phrase. C'est systématiquement une tentative de vol de fonds." },
+  { q:"Le 'Halving' Bitcoin se produit environ tous les :", opts:["6 mois","2 ans","4 ans","10 ans"], a:2, exp:"Le halving réduit de moitié la récompense des mineurs toutes les 210 000 blocs (~4 ans). Il crée un choc d'offre historiquement suivi de bull runs." },
+  { q:"Qu'est-ce que le 'staking' en Proof of Stake ?", opts:["Miner des cryptos avec une carte graphique","Déposer des tokens pour participer à la validation et recevoir des récompenses","Échanger des tokens sur un DEX","Fournir de la liquidité à un pool AMM"], a:1, exp:"Le staking consiste à déposer et 'bloquer' des tokens pour participer à la validation du réseau PoS. En récompense, vous recevez des intérêts (APY)." },
+  { q:"Pour devenir Ambassadeur Web3, la compétence la plus importante est :", opts:["Posséder un maximum de cryptomonnaies","Savoir coder des smart contracts en Solidity","Maîtriser les bases Web3, créer du contenu et animer une communauté","Avoir un compte vérifié sur tous les exchanges"], a:2, exp:"Un ambassadeur Web3 efficace combine connaissances techniques, capacité à vulgariser l'information, création de contenu régulier et animation de communauté." }
+];
+
+/* ── EXAM STATE ─────────────────────────────────────────────── */
+let currentQ = 0;
+let answers  = new Array(EXAM_QUESTIONS.length).fill(null);
+let answered = false;
+let timerInterval = null;
+let timeLeft = 30 * 60; // 30 min
+let examActive = false;
+
+/* ── INIT ────────────────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  // Pre-fill name from progress
+  const p = IDW3.getProgress();
+  if (p.userName) document.getElementById('certName').value = p.userName;
+
+  // Check if coming from URL with ?id=
+  const params = new URLSearchParams(location.search);
+  if (params.get('id')) {
+    const cert = IDW3.verifyCertification(params.get('id'));
+    if (cert) showCertificate(cert.name, cert.score, cert.grade, cert.id, cert.date);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', startExam);
+  document.getElementById('nextBtn').addEventListener('click', nextQ);
+  document.getElementById('submitBtn').addEventListener('click', submitExam);
+});
+
+function startExam() {
+  const name = document.getElementById('certName').value.trim();
+  if (!name) { alert('Veuillez entrer votre nom complet pour le certificat.'); return; }
+  IDW3.setUserName(name);
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = '';
+  examActive = true;
+  buildDots();
+  renderQuestion(0);
+  startTimer();
+}
+
+function buildDots() {
+  const wrap = document.getElementById('progressDots');
+  wrap.innerHTML = EXAM_QUESTIONS.map((_,i) =>
+    `<div class="dot ${i===0?'current':''}" id="dot${i}"></div>`).join('');
+}
+
+function updateDot(i, cls) {
+  const d = document.getElementById('dot'+i);
+  if (d) { d.className = 'dot ' + cls; }
+}
+
+function renderQuestion(i) {
+  const q = EXAM_QUESTIONS[i];
+  answered = answers[i] !== null;
+  document.getElementById('qNumber').textContent = `Question ${i+1}`;
+  document.getElementById('questionCounter').textContent = `Question ${i+1} / ${EXAM_QUESTIONS.length}`;
+  document.getElementById('qText').textContent = q.q;
+  const nextBtn   = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const prevBtn   = document.getElementById('prevBtn');
+
+  // Options
+  const opts = document.getElementById('qOptions');
+  opts.innerHTML = ['A','B','C','D'].map((letter, idx) => `
+    <button class="exam-option ${answered && answers[i]===idx ? (idx===q.a?'correct':'wrong') : ''} ${answered && idx===q.a && answers[i]!==idx ? 'correct':''}"
+      onclick="selectOption(${i},${idx},this)"
+      ${answered ? 'disabled' : ''}>
+      <span class="option-letter">${letter}</span>
+      ${q.opts[idx]}
+    </button>`).join('');
+
+  // Feedback
+  const fb = document.getElementById('qFeedback');
+  if (answered) {
+    const ok = answers[i] === q.a;
+    fb.innerHTML = `<div class="quiz-feedback ${ok?'correct':'wrong'}">${ok?'✅':'❌'} ${q.exp}</div>`;
+  } else { fb.innerHTML = ''; }
+
+  // Nav buttons
+  prevBtn.style.display   = i > 0 ? '' : 'none';
+  nextBtn.style.display   = i < EXAM_QUESTIONS.length - 1 ? '' : 'none';
+  submitBtn.style.display = i === EXAM_QUESTIONS.length - 1 ? '' : 'none';
+  nextBtn.disabled   = !answered;
+  submitBtn.disabled = answers.some(a => a === null);
+
+  // Update current dot
+  document.querySelectorAll('.dot').forEach((d,idx)=>{
+    d.className = 'dot';
+    if (answers[idx]!==null) d.classList.add(answers[idx]===EXAM_QUESTIONS[idx].a?'correct':'wrong');
+    if (idx===i) d.classList.add('current');
+  });
+
+  document.getElementById('prevBtn').onclick = () => { currentQ--; renderQuestion(currentQ); };
+}
+
+function selectOption(qIdx, optIdx, el) {
+  if (answered) return;
+  answers[qIdx] = optIdx;
+  answered = true;
+  renderQuestion(qIdx);
+}
+
+function nextQ() {
+  if (currentQ < EXAM_QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion(currentQ);
+  }
+}
+
+function startTimer() {
+  const el = document.getElementById('examTimer');
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = String(Math.floor(timeLeft/60)).padStart(2,'0');
+    const s = String(timeLeft%60).padStart(2,'0');
+    el.textContent = `${m}:${s}`;
+    el.className   = 'exam-timer' + (timeLeft<=300?' warning':'') + (timeLeft<=60?' danger':'');
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  examActive = false;
+  const correct = answers.filter((a,i) => a === EXAM_QUESTIONS[i].a).length;
+  const pct     = Math.round((correct / EXAM_QUESTIONS.length) * 100);
+  const grade   = pct >= 90 ? 'Mention Très Bien' : pct >= 80 ? 'Mention Bien' : pct >= 70 ? 'Mention Assez Bien' : pct >= 60 ? 'Mention Passable' : 'Insuffisant';
+  const color   = pct >= 80 ? '#059669' : pct >= 60 ? '#f0c040' : '#dc2626';
+  const passed  = pct >= 60;
+
+  IDW3.saveQuizScore('exam_final', correct, EXAM_QUESTIONS.length);
+
+  document.getElementById('examScreen').style.display = 'none';
+  document.getElementById('scoreScreen').style.display = '';
+
+  // Score ring animation
+  const ring   = document.getElementById('scoreRing');
+  const total  = 2 * Math.PI * 58;
+  setTimeout(() => {
+    ring.style.strokeDashoffset = total - (total * pct / 100);
+    ring.style.transition = 'stroke-dashoffset 1.2s ease';
+  }, 100);
+
+  document.getElementById('scoreValue').textContent = pct + '%';
+  document.getElementById('scoreValue').style.color = color;
+  document.getElementById('scoreGrade').textContent = grade;
+  document.getElementById('scoreGrade').style.color = color;
+  document.getElementById('scoreMsg').textContent = passed
+    ? `Bravo ! Vous avez répondu correctement à ${correct}/${EXAM_QUESTIONS.length} questions. Votre certificat est prêt.`
+    : `Vous avez répondu correctement à ${correct}/${EXAM_QUESTIONS.length} questions. Il faut 60% minimum. Révisez et réessayez !`;
+
+  document.getElementById('scoreActions').innerHTML = passed
+    ? `<button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="generateCert(${pct},'${grade}')">🏆 Générer mon certificat</button>
+       <a href="debutant.html" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;">📚 Réviser les cours</a>`
+    : `<button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="location.reload()">🔄 Retenter l'examen</button>
+       <a href="debutant.html" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;">📚 Réviser les cours</a>`;
+}
+
+function generateCert(score, grade) {
+  const name  = IDW3.getProgress().userName || document.getElementById('certName')?.value || 'Apprenant';
+  const id    = 'IDW3-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
+  const date  = new Date().toISOString();
+
+  const cert = { name, score, grade, id, date };
+  IDW3.saveCertification(cert);
+  document.getElementById('scoreScreen').style.display = 'none';
+  showCertificate(name, score, grade, id, date);
+}
+
+function showCertificate(name, score, grade, id, date) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = 'none';
+  document.getElementById('scoreScreen').style.display = 'none';
+  document.getElementById('certificateWrap').style.display = '';
+
+  document.getElementById('certNameDisplay').textContent  = name;
+  document.getElementById('certScoreDisplay').textContent = `Score : ${score}% — ${grade}`;
+  document.getElementById('certDateDisplay').textContent  = new Date(date).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('certIdDisplay').textContent    = id;
+  document.getElementById('certVerifyUrl').textContent    = 'verification.html?id=' + id;
+
+  // Signature
+  if (typeof SIGNATURE_B64 !== 'undefined') {
+    document.getElementById('certSigImg').src = SIGNATURE_B64;
+  }
+
+  // QR code placeholder (visual)
+  const qrEl = document.getElementById('certQREl');
+  qrEl.innerHTML = `<svg viewBox="0 0 20 20" width="40" height="40" fill="#1e5fcc">
+    <rect x="1" y="1" width="6" height="6" rx="0.5" fill="none" stroke="#1e5fcc" stroke-width="0.8"/>
+    <rect x="2.5" y="2.5" width="3" height="3" fill="#1e5fcc"/>
+    <rect x="13" y="1" width="6" height="6" rx="0.5" fill="none" stroke="#1e5fcc" stroke-width="0.8"/>
+    <rect x="14.5" y="2.5" width="3" height="3" fill="#1e5fcc"/>
+    <rect x="1" y="13" width="6" height="6" rx="0.5" fill="none" stroke="#1e5fcc" stroke-width="0.8"/>
+    <rect x="2.5" y="14.5" width="3" height="3" fill="#1e5fcc"/>
+    <rect x="9" y="1" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="11" y="1" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="9" y="3" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="11" y="5" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="9" y="9" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="11" y="9" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="13" y="9" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="15" y="9" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="9" y="11" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="13" y="11" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="9" y="13" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="11" y="15" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="13" y="13" width="1.5" height="1.5" fill="#1e5fcc"/><rect x="17" y="13" width="1.5" height="1.5" fill="#1e5fcc"/>
+    <rect x="15" y="17" width="1.5" height="1.5" fill="#1e5fcc"/>
+  </svg>`;
+
+  document.getElementById('verifyLink').href = 'verification.html?id=' + id;
+  window.scrollTo({top: 0, behavior:'smooth'});
+}
+
+function downloadCert() {
+  // Use browser print to save as PDF
+  const style = document.createElement('style');
+  style.id = '__print__';
+  style.textContent = `
+    @media print {
+      body { margin: 0; }
+      body > *:not(#printArea) { display: none !important; }
+      #printArea { display: block !important; }
+      .certificate { page-break-inside: avoid; box-shadow: none !important; }
+    }`;
+  document.head.appendChild(style);
+
+  const orig = document.title;
+  document.title = 'Certificat_Web3_Idelphonse';
+  window.print();
+  document.title = orig;
+  setTimeout(() => { const s = document.getElementById('__print__'); if(s) s.remove(); }, 2000);
+}
+</script>
+</body>
+</html>
