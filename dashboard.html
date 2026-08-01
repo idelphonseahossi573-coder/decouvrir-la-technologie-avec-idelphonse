@@ -454,12 +454,15 @@ function init() {
 
 function updateRing() {
   const pct = IDW3.getGlobalPercent();
-  const circle = document.getElementById('ringProgress');
-  const label  = document.getElementById('ringPct');
-  const total  = 2 * Math.PI * 58;
-  const offset = total - (total * pct / 100);
-  circle.style.strokeDashoffset = offset;
-  label.textContent = pct + '%';
+  setTimeout(function() {
+    var circle = document.getElementById('ringProgress');
+    var label  = document.getElementById('ringPct');
+    if (!circle || !label) return;
+    var total  = 2 * Math.PI * 58;
+    var offset = total - (total * pct / 100);
+    circle.style.strokeDashoffset = offset;
+    label.textContent = pct + '%';
+  }, 100);
   if (pct >= 60) document.getElementById('certBtnTop').style.display = '';
 }
 
@@ -511,7 +514,7 @@ function renderProgression(p) {
       const date = done ? new Date(p.completed[m.id]).toLocaleDateString('fr-FR') : '';
       html += `
         <div class="module-list-item">
-          <div class="module-check ${done?'done':''}" onclick="toggleModule('${m.id}',this)" title="${done?'Marquer incomplet':'Marquer terminé'}">
+          <div class="module-check ${done?'done':''}" onclick="toggleModule('${m.id}')" title="${done?'Marquer incomplet':'Marquer terminé'}">
             ${done ? '✓' : ''}
           </div>
           <span style="${done?'text-decoration:line-through;opacity:.5':''}">${m.label}</span>
@@ -523,16 +526,16 @@ function renderProgression(p) {
   container.innerHTML = html;
 }
 
-function toggleModule(id, el) {
-  const p = IDW3.load();
+function toggleModule(id) {
+  var p = IDW3.getProgress();
   if (p.completed[id]) {
-    delete p.completed[id];
-    el.classList.remove('done');
-    el.textContent = '';
+    // Supprimer le module : opération atomique
+    IDW3.markIncomplete(id);
   } else {
+    // Marquer terminé : opération atomique (sauvegarde + badges en interne)
     IDW3.markComplete(id);
   }
-  IDW3.save(p);
+  // Rafraîchir l'UI après la mutation
   refreshAll();
 }
 
