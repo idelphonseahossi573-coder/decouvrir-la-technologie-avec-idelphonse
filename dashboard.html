@@ -263,6 +263,7 @@
     </div>
     <div class="nav-actions">
       <button class="btn-dark-toggle" id="dark-toggle">🌙</button>
+      <span id="authWidget"></span>
       <a href="certification.html" class="btn btn-primary btn-sm">🏆 Certif</a>
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
@@ -312,6 +313,18 @@
         </svg>
         <a href="certification.html" id="certBtnTop" class="btn btn-primary btn-sm" style="display:none;">🏆 Passer l'examen</a>
       </div>
+    </div>
+
+    <!-- SYNC BANNER -->
+    <div id="syncBanner" style="margin-top:24px;padding:16px 20px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span id="syncIcon" style="font-size:1.4rem;">📱</span>
+        <div>
+          <div id="syncTitle" style="font-weight:700;font-size:.9rem;color:#fff;">Progression sauvegardée sur cet appareil uniquement</div>
+          <div id="syncSubtitle" style="font-size:.8rem;color:rgba(255,255,255,.55);">Connectez-vous avec Google pour retrouver votre parcours sur téléphone, tablette ou ordinateur.</div>
+        </div>
+      </div>
+      <button id="syncLoginBtn" class="btn btn-primary btn-sm" style="white-space:nowrap;">🔐 Se connecter avec Google</button>
     </div>
 
     <!-- Stats Row -->
@@ -411,6 +424,10 @@
 </footer>
 
 <button id="back-to-top" title="Retour en haut">↑</button>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script src="script.js"></script>
 <script src="progress.js"></script>
 <script>
@@ -690,13 +707,98 @@ function refreshAll() {
 }
 
 function confirmReset() {
-  if (confirm('⚠️ Êtes-vous sûr ? Toute votre progression, vos badges et certifications seront effacés définitivement.')) {
-    localStorage.removeItem('idw3_progress');
+  var msg = (typeof IDW3 !== 'undefined' && IDW3.isLoggedIn())
+    ? '⚠️ Êtes-vous sûr ? Toute votre progression sera effacée sur CET appareil ET dans le cloud (tous vos autres appareils connectés).'
+    : '⚠️ Êtes-vous sûr ? Toute votre progression, vos badges et certifications seront effacés définitivement sur cet appareil.';
+  if (confirm(msg)) {
+    if (typeof IDW3 !== 'undefined') { IDW3.resetAll(); }
+    else { localStorage.removeItem('idw3_progress'); }
     location.reload();
   }
 }
 
+/* ── AUTHENTIFICATION GOOGLE / FIREBASE ─────────────────── */
+function renderAuthWidget(user) {
+  var widget = document.getElementById('authWidget');
+  if (!widget) return;
+
+  if (!user) {
+    widget.innerHTML = '<button id="btnGoogleLogin" class="btn btn-outline btn-sm">🔐 Connexion</button>';
+    var btn = document.getElementById('btnGoogleLogin');
+    if (btn) btn.addEventListener('click', doGoogleLogin);
+  } else {
+    var photo = user.photoURL
+      ? '<img src="' + user.photoURL + '" style="width:26px;height:26px;border-radius:50%;object-fit:cover;" referrerpolicy="no-referrer"/>'
+      : '👤';
+    widget.innerHTML = '<button id="btnGoogleLogout" class="btn btn-ghost btn-sm" style="display:flex;align-items:center;gap:8px;" title="Se déconnecter">'
+      + photo + '<span style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (user.displayName || user.email || 'Connecté') + '</span></button>';
+    var btn2 = document.getElementById('btnGoogleLogout');
+    if (btn2) btn2.addEventListener('click', doGoogleLogout);
+  }
+}
+
+function renderSyncBanner(user) {
+  var icon  = document.getElementById('syncIcon');
+  var title = document.getElementById('syncTitle');
+  var sub   = document.getElementById('syncSubtitle');
+  var loginBtn = document.getElementById('syncLoginBtn');
+  var banner = document.getElementById('syncBanner');
+  if (!icon || !title || !sub || !loginBtn || !banner) return;
+
+  if (!user) {
+    icon.textContent = '📱';
+    title.textContent = 'Progression sauvegardée sur cet appareil uniquement';
+    title.style.color = '#fff';
+    sub.textContent = 'Connectez-vous avec Google pour retrouver votre parcours sur téléphone, tablette ou ordinateur.';
+    banner.style.borderColor = 'rgba(255,255,255,.1)';
+    loginBtn.style.display = '';
+    loginBtn.textContent = '🔐 Se connecter avec Google';
+    loginBtn.onclick = doGoogleLogin;
+  } else {
+    icon.textContent = '☁️';
+    title.textContent = 'Connecté — progression synchronisée sur tous vos appareils';
+    title.style.color = '#4ade80';
+    sub.textContent = 'Connecté en tant que ' + (user.email || user.displayName || '') + '. Vos données sont sauvegardées dans le cloud.';
+    banner.style.borderColor = 'rgba(16,185,129,.3)';
+    loginBtn.style.display = 'none';
+  }
+}
+
+function doGoogleLogin() {
+  if (typeof IDW3 === 'undefined' || !IDW3.isFirebaseReady()) {
+    alert("La connexion n'est pas encore configurée par l'administrateur du site. Votre progression reste sauvegardée sur cet appareil.");
+    return;
+  }
+  IDW3.loginWithGoogle().catch(function(err) {
+    console.error(err);
+    alert('Connexion impossible : ' + (err && err.message ? err.message : 'erreur inconnue') + '\n\nVotre progression reste sauvegardée sur cet appareil.');
+  });
+}
+
+function doGoogleLogout() {
+  if (typeof IDW3 === 'undefined') return;
+  IDW3.logout().then(function() {
+    location.reload();
+  });
+}
+
+// S'abonner aux changements d'authentification pour tenir l'UI à jour
+var _authInitDone = false;
+if (typeof IDW3 !== 'undefined') {
+  IDW3.onAuthChange(function(user) {
+    renderAuthWidget(user);
+    renderSyncBanner(user);
+    // Après connexion/déconnexion, les données ont pu changer (fusion cloud) :
+    // on relance un rafraîchissement complet de l'UI, mais uniquement
+    // APRÈS l'appel initial (sinon double-rendu au premier chargement).
+    if (_authInitDone) {
+      setTimeout(refreshAll, 400); // laisser le temps à la fusion Firestore de finir
+    }
+  });
+}
+
 init();
+_authInitDone = true;
 </script>
 </body>
 </html>

@@ -329,6 +329,10 @@
 </footer>
 
 <button id="back-to-top" title="Retour en haut">↑</button>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script src="script.js"></script>
 <script src="progress.js"></script>
 <script>
@@ -360,10 +364,8 @@ function verifyCert() {
     return;
   }
 
-  // Validate format
   const formatOk = /^IDW3-[A-Z0-9]+-[A-Z0-9]+$/.test(rawId);
 
-  // Show loading
   resultEl.style.display = 'flex';
   resultEl.className = 'verif-result loading';
   resultEl.innerHTML = `
@@ -373,21 +375,37 @@ function verifyCert() {
       <div style="font-size:.8rem;color:var(--text-light);">Recherche de l'identifiant <code style="font-family:var(--font-mono);">${rawId}</code></div>
     </div>`;
 
-  // Simulate async check (localStorage is sync but UX feels better with delay)
-  setTimeout(() => {
-    if (!formatOk) {
+  if (!formatOk) {
+    setTimeout(() => {
       showInvalid(resultEl, rawId, 'Format d\'identifiant incorrect. Le format attendu est : IDW3-XXXXX-XXXX');
-      return;
-    }
+    }, 500);
+    return;
+  }
 
-    const cert = IDW3.verifyCertification(rawId);
+  // 1) Recherche locale d'abord (rapide, fonctionne hors-ligne)
+  const localCert = IDW3.verifyCertification(rawId);
+  if (localCert) {
+    setTimeout(() => showValid(resultEl, localCert), 500);
+    return;
+  }
 
-    if (cert) {
-      showValid(resultEl, cert);
-    } else {
-      showInvalid(resultEl, rawId, 'Aucun certificat trouvé avec cet identifiant sur cet appareil. Si vous avez passé l\'examen sur un autre appareil ou navigateur, la vérification doit être effectuée sur le même appareil.');
-    }
-  }, 900);
+  // 2) Rien en local : recherche globale via Firestore (cross-device),
+  //    si Firebase est configuré sur ce site.
+  if (typeof IDW3.isFirebaseReady === 'function' && IDW3.isFirebaseReady()) {
+    IDW3.verifyCertificationRemote(rawId).then((remoteCert) => {
+      if (remoteCert) {
+        showValid(resultEl, remoteCert);
+      } else {
+        showInvalid(resultEl, rawId, "Aucun certificat trouvé avec cet identifiant, ni sur cet appareil, ni dans la base globale. Vérifiez l'identifiant ou contactez Idelphonse.");
+      }
+    }).catch(() => {
+      showInvalid(resultEl, rawId, 'La recherche globale a échoué (connexion internet ?). Nouvelle tentative recommandée.');
+    });
+  } else {
+    setTimeout(() => {
+      showInvalid(resultEl, rawId, "Aucun certificat trouvé sur cet appareil. La vérification cross-appareil n'est pas encore activée sur ce site — contactez Idelphonse pour validation manuelle.");
+    }, 500);
+  }
 }
 
 function showValid(el, cert) {

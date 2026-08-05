@@ -131,6 +131,19 @@
             <li style="font-size:.875rem;color:var(--text-light);">✦ Certificat généré immédiatement après réussite</li>
           </ul>
         </div>
+
+        <!-- Bandeau connexion recommandée -->
+        <div id="certAuthBanner" style="background:rgba(30,95,204,.08);border:1px solid rgba(30,95,204,.2);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:1.3rem;">☁️</span>
+            <div>
+              <div id="certAuthTitle" style="font-weight:700;font-size:.85rem;">Connexion recommandée avant l'examen</div>
+              <div id="certAuthSubtitle" style="font-size:.78rem;color:var(--text-light);">Connectez-vous avec Google pour que votre certificat soit vérifiable depuis n'importe quel appareil.</div>
+            </div>
+          </div>
+          <button id="certAuthBtn" class="btn btn-ghost btn-sm" style="white-space:nowrap;">🔐 Se connecter</button>
+        </div>
+
         <div class="form-group" style="margin-bottom:16px;">
           <label class="form-label">Votre nom complet (il apparaîtra sur le certificat)</label>
           <input type="text" id="inputName" class="name-input-cert" placeholder="ex: Kofi Asante" maxlength="60" autocomplete="name"/>
@@ -206,10 +219,8 @@
             <div class="cert-divider"></div>
             <div class="cert-awarded">Certifie que</div>
             <div class="cert-name" id="cName">—</div>
-            <div class="cert-title">CERTIFICATION WEB3</div>
-            <div class="cert-subtitle">Blockchain · Cryptomonnaies · DeFi · NFT · Ambassadeur</div>
             <div class="cert-body">
-              A réussi avec succès l'examen de certification Web3, démontrant une compréhension solide de la technologie blockchain, des cryptomonnaies, de la finance décentralisée et des pratiques de sécurité numérique.
+              A réussi avec succès l'examen de <strong>Certification Web3</strong> — Blockchain, Cryptomonnaies, DeFi, NFT et Ambassadeur — démontrant une compréhension solide de la technologie blockchain, des cryptomonnaies, de la finance décentralisée et des pratiques de sécurité numérique.
             </div>
             <div class="cert-score-pill" id="cScore">Score : — </div>
             <div class="cert-sig-row">
@@ -236,7 +247,7 @@
         </div>
       </div>
       <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
-        <button onclick="printCert()" class="btn btn-primary btn-lg">⬇️ Télécharger / Imprimer PDF</button>
+        <button onclick="downloadPDF()" id="btnDownloadPdf" class="btn btn-primary btn-lg">⬇️ Télécharger en PDF</button>
         <a id="verifyLink" href="verification.html" class="btn btn-ghost btn-lg">✅ Vérifier le certificat</a>
         <a href="dashboard.html" class="btn btn-outline btn-lg" style="border-color:var(--gray-300);color:var(--text-light);">📊 Dashboard</a>
       </div>
@@ -260,6 +271,12 @@
   </div>
 </footer>
 <button id="back-to-top">↑</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script src="script.js"></script>
 <script src="progress.js"></script>
 <script>
@@ -301,6 +318,42 @@ var timerRef = null;
 var timeLeft = 30 * 60;
 var examName = '';
 
+/* ── AUTH BANNER (connexion Google avant examen) ────────────── */
+function renderCertAuthBanner(user) {
+  var banner = document.getElementById('certAuthBanner');
+  var title  = document.getElementById('certAuthTitle');
+  var sub    = document.getElementById('certAuthSubtitle');
+  var btn    = document.getElementById('certAuthBtn');
+  if (!banner || !title || !sub || !btn) return;
+
+  if (!user) {
+    banner.style.borderColor = 'rgba(30,95,204,.2)';
+    title.textContent = "Connexion recommandée avant l'examen";
+    title.style.color = '';
+    sub.textContent = "Connectez-vous avec Google pour que votre certificat soit vérifiable depuis n'importe quel appareil.";
+    btn.style.display = '';
+    btn.textContent = '🔐 Se connecter';
+    btn.onclick = function() {
+      if (typeof IDW3 === 'undefined' || !IDW3.isFirebaseReady()) {
+        alert("La connexion n'est pas encore configurée par l'administrateur du site. Vous pouvez continuer sans connexion : votre certificat restera vérifiable sur cet appareil.");
+        return;
+      }
+      IDW3.loginWithGoogle().catch(function(err) {
+        alert('Connexion impossible : ' + (err && err.message ? err.message : 'erreur inconnue'));
+      });
+    };
+  } else {
+    banner.style.borderColor = 'rgba(16,185,129,.3)';
+    title.textContent = '✅ Connecté — certificat vérifiable partout';
+    title.style.color = '#4ade80';
+    sub.textContent = 'Connecté en tant que ' + (user.email || user.displayName || '') + '.';
+    btn.style.display = 'none';
+    if (user.displayName && !document.getElementById('inputName').value) {
+      document.getElementById('inputName').value = user.displayName;
+    }
+  }
+}
+
 /* ── INIT ────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', function() {
   /* Charger le nom sauvegardé */
@@ -313,6 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var cert = IDW3.verifyCertification(urlId);
       if (cert) { showCert(cert.name, cert.score, cert.grade, cert.id, cert.date); return; }
     }
+    IDW3.onAuthChange(renderCertAuthBanner);
   }
   document.getElementById('btnStart').addEventListener('click', startExam);
   document.getElementById('btnNext').addEventListener('click', goNext);
@@ -513,12 +567,74 @@ function showCert(name, score, grade, id, date) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ── PRINT ───────────────────────────────────────────────────── */
-function printCert() {
-  var orig = document.title;
-  document.title = 'Certificat_Web3_Idelphonse';
-  window.print();
-  document.title = orig;
+/* ── TÉLÉCHARGEMENT PDF RÉEL (html2canvas + jsPDF) ──────────────── */
+function downloadPDF() {
+  var btn = document.getElementById('btnDownloadPdf');
+  var certNode = document.getElementById('certEl');
+  if (!certNode) { alert('Certificat introuvable.'); return; }
+
+  var originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '⏳ Génération du PDF...';
+
+  // Petites précautions : s'assurer que les polices/images sont chargées
+  var doCapture = function() {
+    html2canvas(certNode, {
+      scale: 3,               // haute résolution
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    }).then(function(canvas) {
+      try {
+        var imgData = canvas.toDataURL('image/png', 1.0);
+        var jsPDFCtor = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
+
+        // Format A4 paysage car le certificat est plus large que haut
+        var pdf = new jsPDFCtor({
+          orientation: 'landscape',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        var pageWidth  = pdf.internal.pageSize.getWidth();
+        var pageHeight = pdf.internal.pageSize.getHeight();
+
+        var imgRatio  = canvas.width / canvas.height;
+        var pageRatio = pageWidth / pageHeight;
+
+        var renderWidth, renderHeight;
+        if (imgRatio > pageRatio) {
+          renderWidth  = pageWidth;
+          renderHeight = pageWidth / imgRatio;
+        } else {
+          renderHeight = pageHeight;
+          renderWidth  = pageHeight * imgRatio;
+        }
+        var offsetX = (pageWidth  - renderWidth)  / 2;
+        var offsetY = (pageHeight - renderHeight) / 2;
+
+        pdf.addImage(imgData, 'PNG', offsetX, offsetY, renderWidth, renderHeight);
+
+        var certId = (document.getElementById('cId') && document.getElementById('cId').textContent) || 'certificat';
+        var fileName = 'Certificat-Web3-Idelphonse-' + certId.trim() + '.pdf';
+        pdf.save(fileName);
+      } catch (err) {
+        console.error(err);
+        alert('Une erreur est survenue pendant la génération du PDF. Réessayez.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      }
+    }).catch(function(err) {
+      console.error(err);
+      alert('Impossible de générer le PDF sur cet appareil. Réessayez ou utilisez un autre navigateur.');
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    });
+  };
+
+  // Laisser le temps au navigateur de peindre l'écran avant capture
+  setTimeout(doCapture, 60);
 }
 </script>
 </body>
